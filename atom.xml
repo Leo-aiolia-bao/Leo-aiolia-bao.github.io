@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://github.com/Leo-aiolia-bao/Leoblog.github.io</id>
+    <id>https://Leoblog.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-02-04T08:02:49.465Z</updated>
+    <updated>2021-02-04T08:05:14.479Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://github.com/Leo-aiolia-bao/Leoblog.github.io"/>
-    <link rel="self" href="https://github.com/Leo-aiolia-bao/Leoblog.github.io/atom.xml"/>
+    <link rel="alternate" href="https://Leoblog.github.io"/>
+    <link rel="self" href="https://Leoblog.github.io/atom.xml"/>
     <subtitle>科学派 | Think twice, code once</subtitle>
-    <logo>https://github.com/Leo-aiolia-bao/Leoblog.github.io/images/avatar.png</logo>
-    <icon>https://github.com/Leo-aiolia-bao/Leoblog.github.io/favicon.ico</icon>
+    <logo>https://Leoblog.github.io/images/avatar.png</logo>
+    <icon>https://Leoblog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
     <entry>
         <title type="html"><![CDATA[Markdown语法]]></title>
-        <id>https://github.com/Leo-aiolia-bao/Leoblog.github.io/post/markdown-yu-fa/</id>
-        <link href="https://github.com/Leo-aiolia-bao/Leoblog.github.io/post/markdown-yu-fa/">
+        <id>https://Leoblog.github.io/post/markdown-yu-fa/</id>
+        <link href="https://Leoblog.github.io/post/markdown-yu-fa/">
         </link>
         <updated>2021-02-04T04:12:11.000Z</updated>
         <content type="html"><![CDATA[<p>Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。</p>
@@ -180,8 +180,8 @@ _   底线<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://github.com/Leo-aiolia-bao/Leoblog.github.io/post/hello-gridea/</id>
-        <link href="https://github.com/Leo-aiolia-bao/Leoblog.github.io/post/hello-gridea/">
+        <id>https://Leoblog.github.io/post/hello-gridea/</id>
+        <link href="https://Leoblog.github.io/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
