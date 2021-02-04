@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Leo-aiolia-bao.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-02-04T08:26:33.651Z</updated>
+    <updated>2021-02-04T08:40:40.457Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
     <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
     <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
+    <entry>
+        <title type="html"><![CDATA[五分钟搭建自己的博客-github+gridea搭建博客和绑定域名]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">
+        </link>
+        <updated>2021-02-04T08:27:00.000Z</updated>
+        <content type="html"><![CDATA[<p>几个教程如下：按部就班操作即可</p>
+<p><a href="https://www.luogu.com.cn/blog/ak-ioi/building-a-blog/">git 及 Gridea 教程</a></p>
+<p><a href="https://gridea.dev/gridea-start/">Gridea官网教程</a></p>
+<p><a href="%5BGridea%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B%5D(https://gridea.dev/gridea-start/)">不错的csdn教程</a></p>
+<p>我踩得坑： <strong>域名</strong>和<strong>仓库</strong>名字 不一致，导致折腾半天找不到自己的博客网站</p>
+<p>如域名：https://getridea.github.io<br>
+仓库：getgridea.github.io</p>
+<p>这样即可 ，<br>
+而下面不可</p>
+<p>如域名：https://getridea.github.io<br>
+仓库：myblog.github.io</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Markdown语法]]></title>
         <id>https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/</id>
