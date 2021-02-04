@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
-<title>Hello Gridea | leo-bao</title>
+<title>朴素的Dijkstra算法 | leo-bao</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1612429245349">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="Hello Gridea" />
-  <meta name="keywords" content="Gridea" />
+  <meta name="description" content="朴素的Dijkstra算法" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -203,8 +203,7 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            <div class="post-side-meta" id="post_side_meta">
-              
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -261,195 +260,6 @@
 
 
 </div>
-            </div>
-            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-              <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto"
-    id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
-</div>
-
-<script>
-
-  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
-  let active = 'active-show', activeClass = 'active-current';
-  let tocWrapper = document.querySelector('#toc_wrapper');
-  let tocContent = tocWrapper.children[0];
-  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
-
-  function addTocNumber(elem, deep) {
-    if (!elem) {
-      return;
-    }
-    let prop = elem.__proto__;
-
-    if (prop === HTMLUListElement.prototype) {
-      for (let i = 0; i < elem.children.length; i++) {
-        addTocNumber(elem.children[i], deep + (i + 1) + '.');
-      }
-    } else if (prop === HTMLLIElement.prototype) {
-      // 保存li元素
-      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
-        lList.push(elem);
-      }
-      for (let i = 0; i < elem.children.length; i++) {
-        let cur = elem.children[i];
-        if (cur.__proto__ === HTMLAnchorElement.prototype) {
-          if (autoNumber) {
-            cur.text = deep + ' ' + cur.text;
-          }
-        } else if (cur.__proto__ === HTMLUListElement.prototype) {
-          addTocNumber(cur, deep);
-        }
-      }
-    }
-  }
-
-  function removeParentActiveClass() {
-    let parents = tocContent.querySelectorAll('.' + active)
-    parents.forEach(function (elem) {
-      elem.classList.remove(active);
-    });
-  }
-
-  function addActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.add(activeClass);
-    }
-  }
-
-  function removeActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.remove(activeClass);
-    }
-  }
-
-  function addActiveLiElemment(elem, parent) {
-    if (!elem || elem === parent) {
-      return;
-    } else {
-      if (elem.__proto__ === HTMLLIElement.prototype) {
-        elem.classList.add(active);
-      }
-      addActiveLiElemment(elem.parentElement, parent);
-    }
-  }
-
-  function showToc() {
-    if (tocWrapper) {
-      postBody = document.querySelector('#post_body');
-      for (let i = 0; i < postBody.children.length; i++) {
-        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-          hList.push(postBody.children[i]);
-        }
-      }
-      if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-      } else if (tocWrapper.classList.contains('no_compress')) {
-        tocContent.classList.add('expanded');
-      } else {
-        if (hList.length > 10) {
-          active = 'active-hidden'
-          tocContent.classList.add('closed');
-        } else {
-          tocContent.classList.add('expanded');
-        }
-      }
-    }
-  }
-
-  (function () {
-    // 处理不是从#一级标题开始目录
-    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
-      let con = tocContent.children[0].children[0];
-      tocContent.innerHTML = con.innerHTML;
-    }
-    let markdownItTOC = document.querySelector('.markdownIt-TOC');
-    let innerHeight = window.innerHeight;
-    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
-    addTocNumber(tocContent, '');
-  })();
-
-  document.addEventListener('scroll', function (e) {
-    if (lList.length <= 0) {
-      return;
-    }
-    let scrollTop = document.scrollingElement.scrollTop + 10;
-    let dir;
-
-    if (lastTop - scrollTop > 0) {
-      dir = 'up';
-    } else {
-      dir = 'down';
-    }
-
-    lastTop = scrollTop;
-    if (scrollTop <= 0) {
-      if (lastIndex >= 0 && lastIndex < hList.length) {
-        lList[lastIndex].classList.remove(activeClass);
-      }
-      return;
-    }
-
-    let current = 0, hasFind = false;
-    for (let i = 0; i < hList.length; i++) {
-      if (hList[i].offsetTop > scrollTop) {
-        current = i;
-        hasFind = true;
-        break;
-      }
-    }
-    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-      current = hList.length - 1;
-    } else {
-      current--;
-    }
-    if (dir === 'down') {
-      if (current > lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex)
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    } else {
-      if (current < lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex);
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    }
-  });
-
-
-  window.addEventListener('load', function () {
-    showToc();
-    document.querySelector('#sidebar').style = 'display: block;';
-    tocWrapper.classList.add('toc-active');
-    setTimeout(function () {
-      if ("createEvent" in document) {
-        let evt = document.createEvent("HTMLEvents");
-        evt.initEvent("scroll", false, true);
-        document.dispatchEvent(evt);
-      }
-      else {
-        document.fireEvent("scroll");
-      }
-    }, 500)
-  })
-
-</script>
-            </div>
           
         
       </div>
@@ -537,8 +347,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">
-      Hello Gridea
+    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/">
+      朴素的Dijkstra算法
     </a>
   </h1>
   <div class="post-meta">
@@ -546,57 +356,143 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2018-12-12 00:00:00">2018-12-12</span>
+      <span class="publish-time" data-t="2021-02-04 16:43:10">2021-02-04</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://Leo-aiolia-bao.github.io/tag/ECPze5fWU/">
-        <span>Gridea</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
+      <span>5<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1135<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+              <pre><code>日期：2021年2月4日
+时间：16点53分
+😅🏀🏀🕔
+</code></pre>
+<p><strong>题目</strong></p>
+<pre><code class="language-c">给定一个n个点m条边的有向图，图中可能存在重边和自环，所有边权均为正值。
+
+请你求出1号点到n号点的最短距离，如果无法从1号点走到n号点，则输出-1。
+
+输入格式
+第一行包含整数n和m。
+
+接下来m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。
+
+输出格式
+输出一个整数，表示1号点到n号点的最短距离。
+
+如果路径不存在，则输出-1。
+
+数据范围
+1≤n≤500,
+1≤m≤105,
+图中涉及边长均不超过10000。
+
+输入样例：
+3 3
+1 2 2
+2 3 1
+1 3 4
+输出样例：
+3
+
+</code></pre>
+<p><strong>以下为完整代码</strong></p>
+<pre><code class="language-c">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstring&gt;
+using namespace std;
+
+const int N=510;
+
+int g[N][N];    //为稠密阵所以用邻接矩阵存储
+int dist[N];    //用于记录每一个点距离第一个点的距离
+bool st[N];     //用于记录该点的最短距离是否已经确定
+
+int n,m;
+
+int Dijkstra()
+{
+    memset(dist, 0x3f,sizeof dist);     //初始化距离  0x3f代表无限大
+
+    dist[1]=0;  //第一个点到自身的距离为0
+
+    for(int i=0;i&lt;n;i++)      //有n个点所以要进行n次 迭代
+    {
+        int t=-1;       //t存储当前访问的点
+
+        for(int j=1;j&lt;=n;j++)   //这里的j代表的是从1号点开始
+            if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j]))     
+                t=j;
+
+        st[t]=true;   
+
+        for(int j=1;j&lt;=n;j++)           //依次更新每个点所到相邻的点路径值
+            dist[j]=min(dist[j],dist[t]+g[t][j]);
+    }
+
+    if(dist[n]==0x3f3f3f3f) return -1;  //如果第n个点路径为无穷大即不存在最低路径
+    return dist[n];
+}
+int main()
+{
+    cin&gt;&gt;n&gt;&gt;m;
+
+    memset(g,0x3f,sizeof g);    //初始化图 因为是求最短路径
+                                //所以每个点初始为无限大
+
+    while(m--)
+    {
+        int x,y,z;
+        cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;
+        g[x][y]=min(g[x][y],z);     //如果发生重边的情况则保留最短的一条边
+    }
+
+    cout&lt;&lt;Dijkstra()&lt;&lt;endl;
+    return 0;
+}
+
+
+</code></pre>
+<p>**思路笔记 **<br>
+有之前宽搜和深搜的基础  就感觉思路特别清晰了</p>
+<p>最近复习了下<code>Dijkstra</code> 发现之前的理解还是有些不太到位<br>
+所以更新了一下 希望能帮助一起学算法的小伙伴理清思路</p>
+<p><code>Dijkstra</code>  的整体思路比较清晰<br>
+即进行<code>n（n为n的个数）</code>次迭代去确定每个点到起点的最小值 最后输出的终点的即为我们要找的最短路的距离</p>
+<p>所以按照这个思路除了存储图外我们还需要存储两个量</p>
+<p><code>dist[n]</code>//用于存储每个点到起点的最短距离<br>
+<code>st[n]</code>  //用于在更新最短距离时 判断当前的点的最短距离是否确定 是否需要更新</p>
+<p>每次迭代的过程中我们都先找到当前未确定的最短距离的点中距离最短的点<br>
+（至于为什么是这样那么这就涉及到<code>Dijkstra算法</code>的具体数学证明了 有兴趣的同学可以百度一下）</p>
+<pre><code class="language-c">int t=-1;       //将t设置为-1 因为Dijkstra算法适用于不存在负权边的图
+for(int j=1;j&lt;=n;j++)
+{
+    if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j])    //该步骤即寻找还未确定最短路的点中路径最短的点
+        t=j;
+}
+</code></pre>
+<p>通过上述操作当前我们的t代表就是剩余未确定最短路的点中 路径最短的点<br>
+而与此同时该点的最短路径也已经确定我们将该点标记</p>
+<p><code>st[t]=true;</code></p>
+<p>然后用这个去更新其余未确定点的最短距离</p>
+<p><code>for(int j=1;j&lt;=n;j++)</code><br>
+<code>dist[j]=min(dist[j],dist[t]+g[t][j]);</code><br>
+//这里可能有同学要问j如果从1开始的话 会不会影响之前已经确定的点的最小距离<br>
+//但其实是不会 因为按照我们的Dijkstra算法的操作顺序 先确定最短距离的点的距离已经比后确定的要小 所以不会影响<br>
+//当然你也可以在循环判断条件里加上<code>if(!st[i])</code><br>
+//这里j从1开始只是为了代码的简洁</p>
+<p>进行n次迭代后最后就可以确定每个点的最短距离<br>
+然后再根据题意输出相应的 要求的最短距离</p>
 
             </div>
             
@@ -609,7 +505,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://Leo-aiolia-bao.github.io/post/hello-gridea/" title="Hello Gridea">https://Leo-aiolia-bao.github.io/post/hello-gridea/</a>
+      <a href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/" title="朴素的Dijkstra算法">https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -618,18 +514,16 @@
   </ul>
   <div class="tags">
     
-      <a href="https://Leo-aiolia-bao.github.io/tag/ECPze5fWU/"># Gridea</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Markdown语法" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">Markdown语法</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Markdown语法" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">上一篇</a>
-      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">五分钟搭建自己的博客-github+gridea搭建博客和绑定域名</a>
+        <a class="nav-mobile-next" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
