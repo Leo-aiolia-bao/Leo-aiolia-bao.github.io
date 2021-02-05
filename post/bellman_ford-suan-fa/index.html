@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
-<title>leo-bao</title>
+<title>bellman_ford算法 | leo-bao</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1612530277019">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,6 +38,8 @@
 
 
 
+  <meta name="description" content="bellman_ford算法" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -185,8 +187,24 @@
     <div
       class="section-layout pisces ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -243,55 +261,520 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%89%8D%E5%AF%BC-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90">(一) 前导 算法分析</a>
+<ul>
+<li><a href="#%E8%AF%A6%E8%A7%A3%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B">详解代码如下：</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E4%BB%80%E4%B9%88%E6%98%AFbellman-ford%E7%AE%97%E6%B3%95">(二) 什么是bellman - ford算法？</a></li>
+</ul>
+</li>
+<li><a href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF"><strong>需要注意的是</strong></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box pisces box-shadow-wrapper">
-          <section class="friends-section bg-color slide-down-in">
-            <div class="firends-box">
-              <h1 class="firends-title" itemprop="name headline">友情链接</h1>
-              
-              
-              
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
             </div>
-            <hr>
-            <div style="text-align:center">
-              <span class="with-love">
-                <i class="fa fa-heart"></i>
-              </span>
-              <span class="language" data-lan="leave-message">留言添加友链</span>
-              <span class="with-love">
-                <i class="fa fa-heart"></i>
-              </span>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/">
+      bellman_ford算法
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2021-02-05 16:40:35">2021-02-05</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>8<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>1876<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+            <div class="post-body next-md-body" id="post_body">
+              <h3 id="一-前导-算法分析">(一) 前导 算法分析</h3>
+<p>1、问题：为什么Dijkstra不能使用在含负权的图中？（在强大的网友指点下已进行修改）</p>
+<p>正确的分析<br>
+Dijkstra算法的3个步骤</p>
+<pre><code>1. 找到当前未标识的且离源点最近的点t
+2. 对t号点点进行标识
+3. 用t号点更新其他点的距离
+</code></pre>
+<p>反例</p>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
+<!-- more -->
+<p><strong>结果：</strong></p>
+<p>dijkstra算法在图中走出来的最短路径是<code>1 -&gt; 2 -&gt; 4 -&gt; 5</code>，算出 1 号点到 5 号点的最短距离是<code>2 + 2 + 1 = 5</code>，然而还存在一条路径是<code>1 -&gt; 3 -&gt; 4 -&gt; 5</code>，该路径的长度是<code>5 + (-2) + 1 = 4</code>，因此 <code>dijkstra</code> 算法失效<br>
+(dijkstra不能解决负权边是因为 dijkstra要求每个点被确定后st[j] = true，dist[j]就是最短距离了，之后就不能再被更新了（一锤子买卖），而如果有负权边的话，那已经确定的点的dist[j]不一定是最短了)</p>
+<h4 id="详解代码如下">详解代码如下：</h4>
+<pre><code class="language-c">int dijkstra()
+{
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+
+    for(int i=0;i&lt;n-1;i++)
+    {
+        cout&lt;&lt;&quot;第&quot;&lt;&lt;(i+1)&lt;&lt;&quot;次循环&quot;&lt;&lt;endl;
+        int t=-1;
+        cout&lt;&lt;&quot;还没开始找未被标记的数之前t的值为：&quot;&lt;&lt;t&lt;&lt;endl;
+        int m=1;
+        for(int j=1;j&lt;=n;j++)
+        {    
+            if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j]))
+            {
+                cout&lt;&lt;&quot;循环内第&quot;&lt;&lt;m&lt;&lt;&quot;次找到符合条件的j是：&quot;&lt;&lt;j&lt;&lt;endl;
+                m++;
+                t=j;
+            }
+        }        
+        cout&lt;&lt;&quot;被标记的数t的值为：&quot;&lt;&lt;t&lt;&lt;endl;
+
+        st[t]=true;
+
+        for(int j=1;j&lt;=n;j++)
+            dist[j] = min(dist[j],dist[t]+g[t][j]);
+
+        cout&lt;&lt;&quot;第&quot;&lt;&lt;(i+1)&lt;&lt;&quot;次循环后dist数组的更新情况：&quot;&lt;&lt;endl;
+        for(int j=1;j&lt;=n;j++)
+        {
+            cout&lt;&lt;&quot;dist[&quot;&lt;&lt;j&lt;&lt;&quot;]距离为:&quot;&lt;&lt;dist[j]&lt;&lt;&quot;, &quot;;
+        }
+        puts(&quot;&quot;);
+        puts(&quot;---------------------------------&quot;);
+    }
+
+    if(dist[n]==0x3f3f3f3f) return -1;
+    else return dist[n];
+}
+输出：
+
+第1次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：1
+被标记的数t的值为：1
+第1次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:1061109567, dist[5]距离为:1061109567, 
+---------------------------------
+第2次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：2
+被标记的数t的值为：2
+第2次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:4, dist[5]距离为:1061109567, 
+---------------------------------
+第3次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：3
+循环内第2次找到符合条件的j是：4
+被标记的数t的值为：4
+第3次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:4, dist[5]距离为:5, 
+---------------------------------
+第4次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：3
+被标记的数t的值为：3
+第4次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:3, dist[5]距离为:5, 
+---------------------------------
+最短路径结果是：5
+
+</code></pre>
+<h3 id="二-什么是bellman-ford算法">(二) 什么是bellman - ford算法？</h3>
+<p><code>Bellman - ford 算法是求含负权图的单源最短路径的一种算法，效率较低，代码难度较小。其原理为连续进行松弛，在每次松弛时把每条边都更新一下，若在 n-1 次松弛后还能更新，则说明图中有负环，因此无法得出结果，否则就完成。</code><br>
+(通俗的来讲就是：假设 1 号点到 n 号点是可达的，每一个点同时向指向的方向出发，更新相邻的点的最短距离，通过循环 n-1 次操作，若图中不存在负环，则 1 号点一定会到达 n 号点，若图中存在负环，则在 n-1 次松弛后一定还会更新)</p>
+<p>3、bellman - ford算法的具体步骤</p>
+<pre><code class="language-c">for n次
+for 所有边 a,b,w (松弛操作)
+dist[b] = min(dist[b],back[a] + w)
+</code></pre>
+<p>注意：back[] 数组是上一次迭代后 dist[] 数组的备份，由于是每个点同时向外出发，因此需要对 dist[] 数组进行备份，若不进行备份会因此发生串联效应，影响到下一个点</p>
+<p>4、在下面代码中，是否能到达n号点的判断中需要进行if(dist[n] &gt; INF/2)判断，而并非是if(dist[n] == INF)判断，原因是INF是一个确定的值，并非真正的无穷大，会随着其他数值而受到影响，dist[n]大于某个与INF相同数量级的数即可<br>
+5、bellman - ford算法擅长解决有边数限制的最短路问题<br>
+时间复杂度 O(nm)O(nm)<br>
+其中n为点数，m为边数</p>
+<pre><code class="language-c">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+using namespace std;
+
+const int N=510,M=10010;
+
+struct Edge{
+    int a;
+    int b;
+    int w;
+}e[M];//把每个边保存下来即可
+int dist[N];
+int back[N];//备份数组放置串联
+int n,m,k;//k代表最短路径最多包涵k条边
+
+int bellman_ford(){
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    for(int i=0;i&lt;k;i++){//k次循环
+        memcpy(back,dist,sizeof dist);
+        for(int j=0;j&lt;m;j++){//遍历所有边
+            int a=e[j].a,b=e[j].b,w=e[j].w;
+            dist[b]=min(dist[b],back[a]+w);//使用backup:避免给a更新后立马更新b,这样b一次性最短路径就多了两条边出来
+        }
+
+    }
+    if(dist[n]&gt;0x3f3f3f3f/2) return -1;
+    else return dist[n];
+
+}
+
+int main(){
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
+    for(int i=0;i&lt;m;i++){
+        int a,b,w;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;w);
+        e[i]={a,b,w};
+    }
+    int res=bellman_ford();
+    if(res==-1) puts(&quot;impossible&quot;);
+    else cout&lt;&lt;res;
+
+
+    return 0;
+}
+</code></pre>
+<h2 id="需要注意的是"><strong>需要注意的是</strong></h2>
+<ol>
+<li>需要把dist数组进行一个备份，这样防止每次更新的时候出现串联；</li>
+<li>由于存在负权边，因此return -1的条件就要改成dist[n]&gt;0x3f3f3f3f/2;</li>
+<li>上面所谓的n次遍历的实际含义是当前的最短路径最多有n-1条边，这也就解释了为啥要i遍历到n的时候退出循环了，因为只有n个点,最短路径无环最多就存在n-1条边。</li>
+<li>这里无需对重边和自环做单独的处理：<br>
+<code>1] 重边：由于遍历了所有的边，总会遍历到较短的那一条; 2] 自环: 有自环就有自环啊，反正又不会死循环;</code></li>
+<li>令人愉悦的是，该算法无非就是循环n次然后遍历所有的边，因此不需要做什么特别的存储，只要把所有的边的信息存下来能够遍历就行;<br>
+6）bellman_ford算法可以存在负权回路，因为它求得的最短路是有限制的，是限制了边数的，这样不会永久的走下去，会得到一个解；<br>
+7)SPFA算法各方面优于该算法，但是在碰到限制了最短路径上边的长度时就只能用bellman_ford了，此时直接把n重循环改成k次循环即可</li>
+</ol>
+
             </div>
-            <hr>
-            <div class="friends-note">
-              <p><strong class="language" data-lan="format">友链格式：</strong></p>
-              <ul>
-                <li><span class="language" data-lan="site-name">网站名称：</span>leo-bao</li>
-                <li><span class="language" data-lan="site-link">网站地址：</span><a href="https://Leo-aiolia-bao.github.io" data-pjax-state="">https://Leo-aiolia-bao.github.io</a></li>
-                <li><span class="language" data-lan="site-desc">网站描述：</span>科学派 | Think twice, code once</li>
-                <li><span class="language" data-lan="site-img">网站头像：</span>
-                  <a href="https://Leo-aiolia-bao.github.io/images/avatar.png">https://Leo-aiolia-bao.github.io/images/avatar.png</a>
-                </li>
-              </ul>
-            </div>
+            
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      Leo-aiolia-bao
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/" title="bellman_ford算法">https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="图论" href="https://Leo-aiolia-bao.github.io/post/tu-lun/">图论</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="图论" href="https://Leo-aiolia-bao.github.io/post/tu-lun/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="朴素的Dijkstra算法" href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/">朴素的Dijkstra算法</a>
+        <a class="nav-mobile-next" title="朴素的Dijkstra算法" href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
+            
             
   
 
-          </section>
+          </div>
         </div>
       </div>
     </div>
@@ -1038,6 +1521,223 @@
     parent.insertBefore(aelem, next);
   })
 </script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip">打开微信扫一扫，即可进行扫码打赏哦</p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        window.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        window.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        window.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        window.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      window.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
   </div>
 </body>
 
@@ -2068,7 +2768,6 @@ _   底线&lt;br&gt;
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
 <script type="text/javascript" src="/media/js/mouse/fireworks.js"></script>
-
 
 
 

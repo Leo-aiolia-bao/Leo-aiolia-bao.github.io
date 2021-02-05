@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Leo-aiolia-bao.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-02-04T09:38:00.414Z</updated>
+    <updated>2021-02-05T13:04:55.335Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
     <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
@@ -10,6 +10,399 @@
     <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
     <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
+    <entry>
+        <title type="html"><![CDATA[spfa算法]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/">
+        </link>
+        <updated>2021-02-05T10:01:54.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="算法分析">算法分析</h3>
+<h4 id="1-什么是spfa算法">1、什么是spfa算法？</h4>
+<pre><code class="language-c">SPFA 算法是 Bellman-Ford算法 的队列优化算法的别称，通常用于求含负权边的单源最短路径，以及判负权环。SPFA一般情况复杂度是O(m)O(m) 最坏情况下复杂度和朴素 Bellman-Ford 相同，为O(nm)O(nm)。
+
+bellman-ford算法操作如下：
+for n次
+for 所有边 a,b,w (松弛操作)
+dist[b] = min(dist[b],back[a] + w)
+
+spfa算法对第二行中所有边进行松弛操作进行了优化，原因是在bellman—ford算法中，即使该点的最短距离尚未更新过，但还是需要用尚未更新过的值去更新其他点，由此可知，该操作是不必要的，我们只需要找到更新过的值去更新其他点即可。
+</code></pre>
+<h4 id="2-spfa算法步骤">2、spfa算法步骤</h4>
+<pre><code class="language-c">queue &lt;– 1
+while queue 不为空
+ (1) t &lt;– 队头
+ queue.pop()
+ (2)用 t 更新所有出边 t –&gt; b，权值为w
+ queue &lt;– b (若该点被更新过，则拿该点更新其他点)
+
+时间复杂度 一般：O(m)O(m) 最坏：O(nm)O(nm)
+n为点数，m为边数
+</code></pre>
+<h4 id="3-spfa也能解决权值为正的图的最短距离问题且一般情况下比dijkstra算法还好">3、spfa也能解决权值为正的图的最短距离问题，且一般情况下比Dijkstra算法还好</h4>
+<h3 id="代码及注释">代码及注释</h3>
+<pre><code class="language-c">
+#include&lt;iostream&gt;
+#include&lt;queue&gt;
+#include&lt;cstring&gt;
+using namespace std;
+
+const int N=1e5+10;
+
+#define fi first
+#define se second
+
+typedef pair&lt;int,int&gt; PII;//到源点的距离，下标号
+
+int h[N],e[N],w[N],ne[N],idx=0;
+int dist[N];//各点到源点的距离
+bool st[N];
+int n,m;
+void add(int a,int b,int c){
+    e[idx]=b;w[idx]=c;ne[idx]=h[a];h[a]=idx++;
+}
+
+int spfa(){
+    queue&lt;PII&gt; q;
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    q.push({0,1});
+    st[1]=true;
+    while(q.size()){
+        PII p=q.front();
+        q.pop();
+        int t=p.se;
+        st[t]=false;//从队列中取出来之后该节点st被标记为false,代表之后该节点如果发生更新可再次入队
+        for(int i=h[t];i!=-1;i=ne[i]){
+            int j=e[i];
+            if(dist[j]&gt;dist[t]+w[i]){
+                dist[j]=dist[t]+w[i];
+                if(!st[j]){//当前已经加入队列的结点，无需再次加入队列，即便发生了更新也只用更新数值即可，重复添加降低效率
+                    st[j]=true;
+                    q.push({dist[j],j});
+                }
+            }
+        }
+    }
+    if(dist[n]==0x3f3f3f3f) return -1;
+    else return dist[n];
+}
+
+int main(){
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(h,-1,sizeof h);
+    while(m--){
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        add(a,b,c);
+    }
+    int res=spfa();
+    if(res==-1) puts(&quot;impossible&quot;);
+    else printf(&quot;%d&quot;,res);
+
+    return 0;
+}
+
+</code></pre>
+<h3 id="算法分析2">算法分析2</h3>
+<p>使用spfa算法解决是否存在负环问题</p>
+<p>求负环的常用方法，基于<code>SPFA</code>，一般都用方法 2（该题也是用方法 2）：</p>
+<ul>
+<li>方法 1：统计每个点入队的次数，如果某个点入队n次，则说明存在负环</li>
+<li>方法 2：统计当前每个点的最短路中所包含的边数，如果某点的最短路所包含的边数大于等于n，则也说明存在环</li>
+</ul>
+<p>cnt数组表示到达当前这个点最短路的边数，如果cnt[x]&gt;=n,说明至少经过了n条边，即n+1个点，由抽屉原理可知显然有两个点重复，即存在负环</p>
+<p>_<strong>yls的原话</strong><br>
+每次做一遍<code>spfa()</code>一定是正确的，但时间复杂度较高，可能会超时。初始时将所有点插入队列中可以按如下方式理解：<br>
+在原图的基础上新建一个虚拟源点，从该点向其他所有点连一条权值为<code>0</code>的有向边。那么原图有负环等价于新图有负环。此时在新图上做<code>spfa</code>，将虚拟源点加入队列中。然后进行<code>spfa</code>的第一次迭代，这时会将所有点的距离更新并将所有点插入队列中。执行到这一步，就等价于视频中的做法了。那么视频中的做法可以找到负环，等价于这次<code>spfa</code>可以找到负环，等价于新图有负环，等价于原图有负环。得证。</p>
+<ul>
+<li>
+<p>1、dist[x] 记录虚拟源点到x的最短距离</p>
+</li>
+<li>
+<p>2、cnt[x] 记录当前x点到虚拟源点最短路的边数，初始每个点到虚拟源点的距离为0，只要他能再走n步，即cnt[x] &gt;= n，则表示该图中一定存在负环，由于从虚拟源点到x至少经过n条边时，则说明图中至少有n + 1个点，表示一定有点是重复使用</p>
+</li>
+<li>
+<p>3、若dist[j] &gt; dist[t] + w[i],则表示从t点走到j点能够让权值变少，因此进行对该点j进行更新，并且对应cnt[j] = cnt[t] + 1,往前走一步</p>
+</li>
+</ul>
+<h4 id="注意该题是判断是否存在负环并非判断是否存在从1开始的负环因此需要将所有的点都加入队列中更新周围的点">注意：该题是判断是否存在负环，并非判断是否存在从1开始的负环，因此需要将所有的点都加入队列中，更新周围的点</h4>
+<pre><code class="language-c">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+const int N = 100010;
+
+int n,m;
+int h[N], w[N], e[N], ne[N], idx;
+int dist[N], cnt[N];  // cnt
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++;
+    
+}
+
+int spfa()
+{
+    // memset(dist, 0x3f, sizeof dist);
+    // dist[1]= 0;
+    
+    queue &lt;int&gt; q;
+    for(int i = 1 ; i&lt;=n; i++)
+    {
+        st[i] = true;
+        q.push(i);
+    }
+    
+    // q.push(1);
+    // st[1] = true;
+    
+    while(q.size())
+    {
+        int t = q.front();
+        q.pop();
+        
+        st[t] = false;
+        //更新t的所有邻边
+        for(int i = h[t]; i!=-1; i = ne[i])
+        {
+            int j = e[i];
+            if(dist[j] &gt; dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i]; 
+                cnt[j] = cnt[t] + 1;  // 1
+                
+                if(cnt[j] &gt;= n) return true;  //2
+                if(!st[j])
+                {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    scanf(&quot;%d%d&quot;,&amp;n, &amp;m);
+    
+    memset(h, -1, sizeof h);
+    
+    while(m --)
+    {
+        int a, b, c;
+        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
+        add(a, b, c);
+    }
+    
+    if(spfa()) puts(&quot;Yes&quot;);
+    else puts(&quot;No&quot;);
+    
+    
+    
+    return 0;
+}
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[图论]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/tu-lun/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/tu-lun/">
+        </link>
+        <updated>2021-02-05T09:30:16.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612517738961.png" alt="" loading="lazy"></figure>
+<p>正权图<br>
+负权图<br>
+都可用SPFA 算法 一般O(m), 最坏O(mn)<br>
+比dijkstra 速度快<br>
+可能会卡掉 很小可能，就是时间复杂度最坏时</p>
+<p>算法： 思维 思路    写清笔记 证明<br>
+代码熟练度</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[bellman_ford算法]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/">
+        </link>
+        <updated>2021-02-05T08:40:35.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="一-前导-算法分析">(一) 前导 算法分析</h3>
+<p>1、问题：为什么Dijkstra不能使用在含负权的图中？（在强大的网友指点下已进行修改）</p>
+<p>正确的分析<br>
+Dijkstra算法的3个步骤</p>
+<pre><code>1. 找到当前未标识的且离源点最近的点t
+2. 对t号点点进行标识
+3. 用t号点更新其他点的距离
+</code></pre>
+<p>反例</p>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="一-前导-算法分析">(一) 前导 算法分析</h3>
+<p>1、问题：为什么Dijkstra不能使用在含负权的图中？（在强大的网友指点下已进行修改）</p>
+<p>正确的分析<br>
+Dijkstra算法的3个步骤</p>
+<pre><code>1. 找到当前未标识的且离源点最近的点t
+2. 对t号点点进行标识
+3. 用t号点更新其他点的距离
+</code></pre>
+<p>反例</p>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
+<!-- more -->
+<p><strong>结果：</strong></p>
+<p>dijkstra算法在图中走出来的最短路径是<code>1 -&gt; 2 -&gt; 4 -&gt; 5</code>，算出 1 号点到 5 号点的最短距离是<code>2 + 2 + 1 = 5</code>，然而还存在一条路径是<code>1 -&gt; 3 -&gt; 4 -&gt; 5</code>，该路径的长度是<code>5 + (-2) + 1 = 4</code>，因此 <code>dijkstra</code> 算法失效<br>
+(dijkstra不能解决负权边是因为 dijkstra要求每个点被确定后st[j] = true，dist[j]就是最短距离了，之后就不能再被更新了（一锤子买卖），而如果有负权边的话，那已经确定的点的dist[j]不一定是最短了)</p>
+<h4 id="详解代码如下">详解代码如下：</h4>
+<pre><code class="language-c">int dijkstra()
+{
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+
+    for(int i=0;i&lt;n-1;i++)
+    {
+        cout&lt;&lt;&quot;第&quot;&lt;&lt;(i+1)&lt;&lt;&quot;次循环&quot;&lt;&lt;endl;
+        int t=-1;
+        cout&lt;&lt;&quot;还没开始找未被标记的数之前t的值为：&quot;&lt;&lt;t&lt;&lt;endl;
+        int m=1;
+        for(int j=1;j&lt;=n;j++)
+        {    
+            if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j]))
+            {
+                cout&lt;&lt;&quot;循环内第&quot;&lt;&lt;m&lt;&lt;&quot;次找到符合条件的j是：&quot;&lt;&lt;j&lt;&lt;endl;
+                m++;
+                t=j;
+            }
+        }        
+        cout&lt;&lt;&quot;被标记的数t的值为：&quot;&lt;&lt;t&lt;&lt;endl;
+
+        st[t]=true;
+
+        for(int j=1;j&lt;=n;j++)
+            dist[j] = min(dist[j],dist[t]+g[t][j]);
+
+        cout&lt;&lt;&quot;第&quot;&lt;&lt;(i+1)&lt;&lt;&quot;次循环后dist数组的更新情况：&quot;&lt;&lt;endl;
+        for(int j=1;j&lt;=n;j++)
+        {
+            cout&lt;&lt;&quot;dist[&quot;&lt;&lt;j&lt;&lt;&quot;]距离为:&quot;&lt;&lt;dist[j]&lt;&lt;&quot;, &quot;;
+        }
+        puts(&quot;&quot;);
+        puts(&quot;---------------------------------&quot;);
+    }
+
+    if(dist[n]==0x3f3f3f3f) return -1;
+    else return dist[n];
+}
+输出：
+
+第1次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：1
+被标记的数t的值为：1
+第1次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:1061109567, dist[5]距离为:1061109567, 
+---------------------------------
+第2次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：2
+被标记的数t的值为：2
+第2次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:4, dist[5]距离为:1061109567, 
+---------------------------------
+第3次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：3
+循环内第2次找到符合条件的j是：4
+被标记的数t的值为：4
+第3次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:4, dist[5]距离为:5, 
+---------------------------------
+第4次循环
+还没开始找未被标记的数之前t的值为：-1
+循环内第1次找到符合条件的j是：3
+被标记的数t的值为：3
+第4次循环后dist数组的更新情况：
+dist[1]距离为:0, dist[2]距离为:2, dist[3]距离为:5, dist[4]距离为:3, dist[5]距离为:5, 
+---------------------------------
+最短路径结果是：5
+
+</code></pre>
+<h3 id="二-什么是bellman-ford算法">(二) 什么是bellman - ford算法？</h3>
+<p><code>Bellman - ford 算法是求含负权图的单源最短路径的一种算法，效率较低，代码难度较小。其原理为连续进行松弛，在每次松弛时把每条边都更新一下，若在 n-1 次松弛后还能更新，则说明图中有负环，因此无法得出结果，否则就完成。</code><br>
+(通俗的来讲就是：假设 1 号点到 n 号点是可达的，每一个点同时向指向的方向出发，更新相邻的点的最短距离，通过循环 n-1 次操作，若图中不存在负环，则 1 号点一定会到达 n 号点，若图中存在负环，则在 n-1 次松弛后一定还会更新)</p>
+<p>3、bellman - ford算法的具体步骤</p>
+<pre><code class="language-c">for n次
+for 所有边 a,b,w (松弛操作)
+dist[b] = min(dist[b],back[a] + w)
+</code></pre>
+<p>注意：back[] 数组是上一次迭代后 dist[] 数组的备份，由于是每个点同时向外出发，因此需要对 dist[] 数组进行备份，若不进行备份会因此发生串联效应，影响到下一个点</p>
+<p>4、在下面代码中，是否能到达n号点的判断中需要进行if(dist[n] &gt; INF/2)判断，而并非是if(dist[n] == INF)判断，原因是INF是一个确定的值，并非真正的无穷大，会随着其他数值而受到影响，dist[n]大于某个与INF相同数量级的数即可<br>
+5、bellman - ford算法擅长解决有边数限制的最短路问题<br>
+时间复杂度 O(nm)O(nm)<br>
+其中n为点数，m为边数</p>
+<pre><code class="language-c">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+using namespace std;
+
+const int N=510,M=10010;
+
+struct Edge{
+    int a;
+    int b;
+    int w;
+}e[M];//把每个边保存下来即可
+int dist[N];
+int back[N];//备份数组放置串联
+int n,m,k;//k代表最短路径最多包涵k条边
+
+int bellman_ford(){
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    for(int i=0;i&lt;k;i++){//k次循环
+        memcpy(back,dist,sizeof dist);
+        for(int j=0;j&lt;m;j++){//遍历所有边
+            int a=e[j].a,b=e[j].b,w=e[j].w;
+            dist[b]=min(dist[b],back[a]+w);//使用backup:避免给a更新后立马更新b,这样b一次性最短路径就多了两条边出来
+        }
+
+    }
+    if(dist[n]&gt;0x3f3f3f3f/2) return -1;
+    else return dist[n];
+
+}
+
+int main(){
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
+    for(int i=0;i&lt;m;i++){
+        int a,b,w;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;w);
+        e[i]={a,b,w};
+    }
+    int res=bellman_ford();
+    if(res==-1) puts(&quot;impossible&quot;);
+    else cout&lt;&lt;res;
+
+
+    return 0;
+}
+</code></pre>
+<h2 id="需要注意的是"><strong>需要注意的是</strong></h2>
+<ol>
+<li>需要把dist数组进行一个备份，这样防止每次更新的时候出现串联；</li>
+<li>由于存在负权边，因此return -1的条件就要改成dist[n]&gt;0x3f3f3f3f/2;</li>
+<li>上面所谓的n次遍历的实际含义是当前的最短路径最多有n-1条边，这也就解释了为啥要i遍历到n的时候退出循环了，因为只有n个点,最短路径无环最多就存在n-1条边。</li>
+<li>这里无需对重边和自环做单独的处理：<br>
+<code>1] 重边：由于遍历了所有的边，总会遍历到较短的那一条; 2] 自环: 有自环就有自环啊，反正又不会死循环;</code></li>
+<li>令人愉悦的是，该算法无非就是循环n次然后遍历所有的边，因此不需要做什么特别的存储，只要把所有的边的信息存下来能够遍历就行;<br>
+6）bellman_ford算法可以存在负权回路，因为它求得的最短路是有限制的，是限制了边数的，这样不会永久的走下去，会得到一个解；<br>
+7)SPFA算法各方面优于该算法，但是在碰到限制了最短路径上边的长度时就只能用bellman_ford了，此时直接把n重循环改成k次循环即可</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[朴素的Dijkstra算法]]></title>
         <id>https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/</id>
