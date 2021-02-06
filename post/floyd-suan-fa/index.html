@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
-<title>spfa算法 | leo-bao</title>
+<title>Floyd 算法 | leo-bao</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1612618024893">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,7 +38,7 @@
 
 
 
-  <meta name="description" content="spfa算法" />
+  <meta name="description" content="Floyd 算法" />
   <meta name="keywords" content="" />
 </head>
 
@@ -267,23 +267,26 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E5%A4%9A%E6%BA%90%E6%B1%87%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98-%E5%85%B7%E6%9C%89%E5%A4%9A%E4%B8%AA%E6%BA%90%E7%82%B9">多源汇最短路问题-具有多个源点</a><br>
+*
 <ul>
-<li>
+<li><a href="#floyd%E7%AE%97%E6%B3%95-on3-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">Floyd算法 O(n^3)-动态规划</a>
 <ul>
-<li><a href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90">算法分析</a>
-<ul>
-<li><a href="#1-%E4%BB%80%E4%B9%88%E6%98%AFspfa%E7%AE%97%E6%B3%95">1、什么是spfa算法？</a></li>
-<li><a href="#2-spfa%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4">2、spfa算法步骤</a></li>
-<li><a href="#3-spfa%E4%B9%9F%E8%83%BD%E8%A7%A3%E5%86%B3%E6%9D%83%E5%80%BC%E4%B8%BA%E6%AD%A3%E7%9A%84%E5%9B%BE%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%9D%E7%A6%BB%E9%97%AE%E9%A2%98%E4%B8%94%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5%E4%B8%8B%E6%AF%94dijkstra%E7%AE%97%E6%B3%95%E8%BF%98%E5%A5%BD">3、spfa也能解决权值为正的图的最短距离问题，且一般情况下比Dijkstra算法还好</a></li>
+<li><a href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F">输入格式</a></li>
+<li><a href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F">输出格式</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4">数据范围</a></li>
+<li><a href="#%E8%BE%93%E5%85%A5%E6%A0%B7%E4%BE%8B">输入样例：</a></li>
+<li><a href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B">输出样例：</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码：</a></li>
 </ul>
 </li>
-<li><a href="#%E4%BB%A3%E7%A0%81%E5%8F%8A%E6%B3%A8%E9%87%8A">代码及注释</a></li>
-<li><a href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%902">算法分析2</a>
+<li><a href="#%E6%96%87%E5%AD%97%E6%80%A7%E5%A4%8D%E4%B9%A0"><strong>文字性复习</strong></a>
 <ul>
-<li><a href="#%E6%B3%A8%E6%84%8F%E8%AF%A5%E9%A2%98%E6%98%AF%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E8%B4%9F%E7%8E%AF%E5%B9%B6%E9%9D%9E%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E4%BB%8E1%E5%BC%80%E5%A7%8B%E7%9A%84%E8%B4%9F%E7%8E%AF%E5%9B%A0%E6%AD%A4%E9%9C%80%E8%A6%81%E5%B0%86%E6%89%80%E6%9C%89%E7%9A%84%E7%82%B9%E9%83%BD%E5%8A%A0%E5%85%A5%E9%98%9F%E5%88%97%E4%B8%AD%E6%9B%B4%E6%96%B0%E5%91%A8%E5%9B%B4%E7%9A%84%E7%82%B9">注意：该题是判断是否存在负环，并非判断是否存在从1开始的负环，因此需要将所有的点都加入队列中，更新周围的点</a></li>
-</ul>
-</li>
+<li><a href="#dijkstra-%E6%9C%B4%E7%B4%A0on2"><strong>Dijkstra-朴素O(n^2)</strong></a></li>
+<li><a href="#dijkstra-%E5%A0%86%E4%BC%98%E5%8C%96omlogm"><strong>Dijkstra-堆优化O(mlogm)</strong></a></li>
+<li><a href="#bellman_fordonm"><strong>Bellman_fordO(nm)</strong></a></li>
+<li><a href="#spfa-on~onm"><strong>Spfa O(n)~O(nm)</strong></a></li>
+<li><a href="#floyd-on3"><strong>Floyd O(n^3)</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -553,8 +556,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/">
-      spfa算法
+    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/">
+      Floyd 算法
     </a>
   </h1>
   <div class="post-meta">
@@ -562,215 +565,112 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-05 18:01:54">2021-02-05</span>
+      <span class="publish-time" data-t="2021-02-06 21:20:19">2021-02-06</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>7<span class="language" data-lan="minute">分钟</span></span>
+      <span>4<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1467<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>724<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h3 id="算法分析">算法分析</h3>
-<h4 id="1-什么是spfa算法">1、什么是spfa算法？</h4>
-<pre><code class="language-c">SPFA 算法是 Bellman-Ford算法 的队列优化算法的别称，通常用于求含负权边的单源最短路径，以及判负权环。SPFA一般情况复杂度是O(m)O(m) 最坏情况下复杂度和朴素 Bellman-Ford 相同，为O(nm)O(nm)。
-
-bellman-ford算法操作如下：
-for n次
-for 所有边 a,b,w (松弛操作)
-dist[b] = min(dist[b],back[a] + w)
-
-spfa算法对第二行中所有边进行松弛操作进行了优化，原因是在bellman—ford算法中，即使该点的最短距离尚未更新过，但还是需要用尚未更新过的值去更新其他点，由此可知，该操作是不必要的，我们只需要找到更新过的值去更新其他点即可。
-</code></pre>
-<h4 id="2-spfa算法步骤">2、spfa算法步骤</h4>
-<pre><code class="language-c">queue &lt;– 1
-while queue 不为空
- (1) t &lt;– 队头
- queue.pop()
- (2)用 t 更新所有出边 t –&gt; b，权值为w
- queue &lt;– b (若该点被更新过，则拿该点更新其他点)
-
-时间复杂度 一般：O(m)O(m) 最坏：O(nm)O(nm)
-n为点数，m为边数
-</code></pre>
-<h4 id="3-spfa也能解决权值为正的图的最短距离问题且一般情况下比dijkstra算法还好">3、spfa也能解决权值为正的图的最短距离问题，且一般情况下比Dijkstra算法还好</h4>
-<h3 id="代码及注释">代码及注释</h3>
-<pre><code class="language-c">
-#include&lt;iostream&gt;
-#include&lt;queue&gt;
-#include&lt;cstring&gt;
-using namespace std;
-
-const int N=1e5+10;
-
-#define fi first
-#define se second
-
-typedef pair&lt;int,int&gt; PII;//到源点的距离，下标号
-
-int h[N],e[N],w[N],ne[N],idx=0;
-int dist[N];//各点到源点的距离
-bool st[N];
-int n,m;
-void add(int a,int b,int c){
-    e[idx]=b;w[idx]=c;ne[idx]=h[a];h[a]=idx++;
-}
-
-int spfa(){
-    queue&lt;PII&gt; q;
-    memset(dist,0x3f,sizeof dist);
-    dist[1]=0;
-    q.push({0,1});
-    st[1]=true;
-    while(q.size()){
-        PII p=q.front();
-        q.pop();
-        int t=p.se;
-        st[t]=false;//从队列中取出来之后该节点st被标记为false,代表之后该节点如果发生更新可再次入队
-        for(int i=h[t];i!=-1;i=ne[i]){
-            int j=e[i];
-            if(dist[j]&gt;dist[t]+w[i]){
-                dist[j]=dist[t]+w[i];
-                if(!st[j]){//当前已经加入队列的结点，无需再次加入队列，即便发生了更新也只用更新数值即可，重复添加降低效率
-                    st[j]=true;
-                    q.push({dist[j],j});
-                }
-            }
-        }
-    }
-    if(dist[n]==0x3f3f3f3f) return -1;
-    else return dist[n];
-}
-
-int main(){
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-    memset(h,-1,sizeof h);
-    while(m--){
-        int a,b,c;
-        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
-        add(a,b,c);
-    }
-    int res=spfa();
-    if(res==-1) puts(&quot;impossible&quot;);
-    else printf(&quot;%d&quot;,res);
-
-    return 0;
-}
-
-</code></pre>
-<h3 id="算法分析2">算法分析2</h3>
-<p>使用spfa算法解决是否存在负环问题</p>
-<p>求负环的常用方法，基于<code>SPFA</code>，一般都用方法 2（该题也是用方法 2）：</p>
-<ul>
-<li>方法 1：统计每个点入队的次数，如果某个点入队n次，则说明存在负环</li>
-<li>方法 2：统计当前每个点的最短路中所包含的边数，如果某点的最短路所包含的边数大于等于n，则也说明存在环</li>
-</ul>
-<p>cnt数组表示到达当前这个点最短路的边数，如果cnt[x]&gt;=n,说明至少经过了n条边，即n+1个点，由抽屉原理可知显然有两个点重复，即存在负环</p>
-<p>_<strong>yls的原话</strong><br>
-每次做一遍<code>spfa()</code>一定是正确的，但时间复杂度较高，可能会超时。初始时将所有点插入队列中可以按如下方式理解：<br>
-在原图的基础上新建一个虚拟源点，从该点向其他所有点连一条权值为<code>0</code>的有向边。那么原图有负环等价于新图有负环。此时在新图上做<code>spfa</code>，将虚拟源点加入队列中。然后进行<code>spfa</code>的第一次迭代，这时会将所有点的距离更新并将所有点插入队列中。执行到这一步，就等价于视频中的做法了。那么视频中的做法可以找到负环，等价于这次<code>spfa</code>可以找到负环，等价于新图有负环，等价于原图有负环。得证。</p>
-<ul>
-<li>
-<p>1、dist[x] 记录虚拟源点到x的最短距离</p>
-</li>
-<li>
-<p>2、cnt[x] 记录当前x点到虚拟源点最短路的边数，初始每个点到虚拟源点的距离为0，只要他能再走n步，即cnt[x] &gt;= n，则表示该图中一定存在负环，由于从虚拟源点到x至少经过n条边时，则说明图中至少有n + 1个点，表示一定有点是重复使用</p>
-</li>
-<li>
-<p>3、若dist[j] &gt; dist[t] + w[i],则表示从t点走到j点能够让权值变少，因此进行对该点j进行更新，并且对应cnt[j] = cnt[t] + 1,往前走一步</p>
-</li>
-</ul>
-<h4 id="注意该题是判断是否存在负环并非判断是否存在从1开始的负环因此需要将所有的点都加入队列中更新周围的点">注意：该题是判断是否存在负环，并非判断是否存在从1开始的负环，因此需要将所有的点都加入队列中，更新周围的点</h4>
+              <h1 id="多源汇最短路问题-具有多个源点">多源汇最短路问题-具有多个源点</h1>
+<h3 id="floyd算法-on3-动态规划">Floyd算法 O(n^3)-动态规划</h3>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环，边权可能为负数。</p>
+<p>再给定k个询问，每个询问包含两个整数x和y，表示查询从点x到点y的最短距离，如果路径不存在，则输出“impossible”。</p>
+<p>数据保证图中不存在负权回路。</p>
+<h4 id="输入格式">输入格式</h4>
+<p>第一行包含三个整数n，m，k</p>
+<p>接下来m行，每行包含三个整数x，y，z，表示点x和点y之间存在一条有向边，边长为z。</p>
+<p>接下来k行，每行包含两个整数x，y，表示询问点x到点y的最短距离。</p>
+<h4 id="输出格式">输出格式</h4>
+<p>共k行，每行输出一个整数，表示询问的结果，若询问两点间不存在路径，则输出“impossible”。</p>
+<h4 id="数据范围">数据范围</h4>
+<p>1≤n≤2001≤n≤200<br>
+1≤k≤n21≤k≤n2<br>
+1≤m≤200001≤m≤20000<br>
+图中涉及边长绝对值均不超过10000。</p>
+<h4 id="输入样例">输入样例：</h4>
+<p>3 3 2<br>
+1 2 1<br>
+2 3 2<br>
+1 3 1<br>
+2 1<br>
+1 3</p>
+<h4 id="输出样例">输出样例：</h4>
+<p>impossible<br>
+1</p>
+<h4 id="代码">代码：</h4>
 <pre><code class="language-c">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;queue&gt;
-
 using namespace std;
-const int N = 100010;
 
-int n,m;
-int h[N], w[N], e[N], ne[N], idx;
-int dist[N], cnt[N];  // cnt
-bool st[N];
+const int N = 210, M = 2e+10, INF = 1e9;
 
-void add(int a, int b, int c)
-{
-    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++;
-    
+int n, m, k, x, y, z;
+int d[N][N];
+
+void floyd() {
+    for(int k = 1; k &lt;= n; k++)
+        for(int i = 1; i &lt;= n; i++)
+            for(int j = 1; j &lt;= n; j++)
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
 }
 
-int spfa()
-{
-    // memset(dist, 0x3f, sizeof dist);
-    // dist[1]= 0;
-    
-    queue &lt;int&gt; q;
-    for(int i = 1 ; i&lt;=n; i++)
-    {
-        st[i] = true;
-        q.push(i);
+int main() {
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    for(int i = 1; i &lt;= n; i++)
+        for(int j = 1; j &lt;= n; j++)
+            if(i == j) d[i][j] = 0;
+            else d[i][j] = INF;
+    while(m--) {
+        cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
+        d[x][y] = min(d[x][y], z);
+        //注意保存最小的边
     }
-    
-    // q.push(1);
-    // st[1] = true;
-    
-    while(q.size())
-    {
-        int t = q.front();
-        q.pop();
-        
-        st[t] = false;
-        //更新t的所有邻边
-        for(int i = h[t]; i!=-1; i = ne[i])
-        {
-            int j = e[i];
-            if(dist[j] &gt; dist[t] + w[i])
-            {
-                dist[j] = dist[t] + w[i]; 
-                cnt[j] = cnt[t] + 1;  // 1
-                
-                if(cnt[j] &gt;= n) return true;  //2
-                if(!st[j])
-                {
-                    q.push(j);
-                    st[j] = true;
-                }
-            }
-        }
+    floyd();
+    while(k--) {
+        cin &gt;&gt; x &gt;&gt; y;
+        if(d[x][y] &gt; INF/2) puts(&quot;impossible&quot;);
+        //由于有负权边存在所以约大过INF/2也很合理
+        else cout &lt;&lt; d[x][y] &lt;&lt; endl;
     }
-    return false;
-}
-
-int main()
-{
-    scanf(&quot;%d%d&quot;,&amp;n, &amp;m);
-    
-    memset(h, -1, sizeof h);
-    
-    while(m --)
-    {
-        int a, b, c;
-        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
-        add(a, b, c);
-    }
-    
-    if(spfa()) puts(&quot;Yes&quot;);
-    else puts(&quot;No&quot;);
-    
-    
-    
     return 0;
 }
-
 </code></pre>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612618012689.png" alt="" loading="lazy"></figure>
+<h2 id="文字性复习"><strong>文字性复习</strong></h2>
+<h3 id="dijkstra-朴素on2"><strong>Dijkstra-朴素O(n^2)</strong></h3>
+<ol>
+<li>初始化距离数组, dist[1] = 0, dist[i] = inf;</li>
+<li>for n次循环 每次循环确定一个min加入S集合中，n次之后就得出所有的最短距离</li>
+<li>将不在S中dist_min的点-&gt;t</li>
+<li>t-&gt;S加入最短路集合</li>
+<li>用t更新到其他点的距离</li>
+</ol>
+<h3 id="dijkstra-堆优化omlogm"><strong>Dijkstra-堆优化O(mlogm)</strong></h3>
+<p>利用邻接表，优先队列<br>
+在priority_queue[HTML_REMOVED], greater[HTML_REMOVED] &gt; heap;中将返回堆顶<br>
+利用堆顶来更新其他点，并加入堆中类似宽搜</p>
+<h3 id="bellman_fordonm"><strong>Bellman_fordO(nm)</strong></h3>
+<p>注意连锁想象需要备份, struct Edge{inta,b,c} Edge[M];<br>
+初始化dist, 松弛dist[x.b] = min(dist[x.b], backup[x.a]+x.w);<br>
+松弛k次，每次访问m条边</p>
+<h3 id="spfa-on~onm"><strong>Spfa O(n)~O(nm)</strong></h3>
+<p>利用队列优化仅加入修改过的地方<br>
+for k次<br>
+for 所有边利用宽搜模型去优化bellman_ford算法<br>
+更新队列中当前点的所有出边</p>
+<h3 id="floyd-on3"><strong>Floyd O(n^3)</strong></h3>
+<p>初始化d<br>
+k, i, j 去更新d</p>
 
             </div>
             
@@ -783,7 +683,7 @@ int main()
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/" title="spfa算法">https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/</a>
+      <a href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/" title="Floyd 算法">https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -796,15 +696,11 @@ int main()
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Floyd 算法" href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/">Floyd 算法</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Floyd 算法" href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="图论" href="https://Leo-aiolia-bao.github.io/post/tu-lun/">图论</a>
-        <a class="nav-mobile-next" title="图论" href="https://Leo-aiolia-bao.github.io/post/tu-lun/">下一篇</a>
+        <a class="nav-pc-next" title="spfa算法" href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/">spfa算法</a>
+        <a class="nav-mobile-next" title="spfa算法" href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Leo-aiolia-bao.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-02-05T13:04:55.335Z</updated>
+    <updated>2021-02-06T13:28:12.778Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
     <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
@@ -10,6 +10,103 @@
     <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
     <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
+    <entry>
+        <title type="html"><![CDATA[Floyd 算法]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/">
+        </link>
+        <updated>2021-02-06T13:20:19.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="多源汇最短路问题-具有多个源点">多源汇最短路问题-具有多个源点</h1>
+<h3 id="floyd算法-on3-动态规划">Floyd算法 O(n^3)-动态规划</h3>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环，边权可能为负数。</p>
+<p>再给定k个询问，每个询问包含两个整数x和y，表示查询从点x到点y的最短距离，如果路径不存在，则输出“impossible”。</p>
+<p>数据保证图中不存在负权回路。</p>
+<h4 id="输入格式">输入格式</h4>
+<p>第一行包含三个整数n，m，k</p>
+<p>接下来m行，每行包含三个整数x，y，z，表示点x和点y之间存在一条有向边，边长为z。</p>
+<p>接下来k行，每行包含两个整数x，y，表示询问点x到点y的最短距离。</p>
+<h4 id="输出格式">输出格式</h4>
+<p>共k行，每行输出一个整数，表示询问的结果，若询问两点间不存在路径，则输出“impossible”。</p>
+<h4 id="数据范围">数据范围</h4>
+<p>1≤n≤2001≤n≤200<br>
+1≤k≤n21≤k≤n2<br>
+1≤m≤200001≤m≤20000<br>
+图中涉及边长绝对值均不超过10000。</p>
+<h4 id="输入样例">输入样例：</h4>
+<p>3 3 2<br>
+1 2 1<br>
+2 3 2<br>
+1 3 1<br>
+2 1<br>
+1 3</p>
+<h4 id="输出样例">输出样例：</h4>
+<p>impossible<br>
+1</p>
+<h4 id="代码">代码：</h4>
+<pre><code class="language-c">#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 210, M = 2e+10, INF = 1e9;
+
+int n, m, k, x, y, z;
+int d[N][N];
+
+void floyd() {
+    for(int k = 1; k &lt;= n; k++)
+        for(int i = 1; i &lt;= n; i++)
+            for(int j = 1; j &lt;= n; j++)
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    for(int i = 1; i &lt;= n; i++)
+        for(int j = 1; j &lt;= n; j++)
+            if(i == j) d[i][j] = 0;
+            else d[i][j] = INF;
+    while(m--) {
+        cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
+        d[x][y] = min(d[x][y], z);
+        //注意保存最小的边
+    }
+    floyd();
+    while(k--) {
+        cin &gt;&gt; x &gt;&gt; y;
+        if(d[x][y] &gt; INF/2) puts(&quot;impossible&quot;);
+        //由于有负权边存在所以约大过INF/2也很合理
+        else cout &lt;&lt; d[x][y] &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612618012689.png" alt="" loading="lazy"></figure>
+<h2 id="文字性复习"><strong>文字性复习</strong></h2>
+<h3 id="dijkstra-朴素on2"><strong>Dijkstra-朴素O(n^2)</strong></h3>
+<ol>
+<li>初始化距离数组, dist[1] = 0, dist[i] = inf;</li>
+<li>for n次循环 每次循环确定一个min加入S集合中，n次之后就得出所有的最短距离</li>
+<li>将不在S中dist_min的点-&gt;t</li>
+<li>t-&gt;S加入最短路集合</li>
+<li>用t更新到其他点的距离</li>
+</ol>
+<h3 id="dijkstra-堆优化omlogm"><strong>Dijkstra-堆优化O(mlogm)</strong></h3>
+<p>利用邻接表，优先队列<br>
+在priority_queue[HTML_REMOVED], greater[HTML_REMOVED] &gt; heap;中将返回堆顶<br>
+利用堆顶来更新其他点，并加入堆中类似宽搜</p>
+<h3 id="bellman_fordonm"><strong>Bellman_fordO(nm)</strong></h3>
+<p>注意连锁想象需要备份, struct Edge{inta,b,c} Edge[M];<br>
+初始化dist, 松弛dist[x.b] = min(dist[x.b], backup[x.a]+x.w);<br>
+松弛k次，每次访问m条边</p>
+<h3 id="spfa-on~onm"><strong>Spfa O(n)~O(nm)</strong></h3>
+<p>利用队列优化仅加入修改过的地方<br>
+for k次<br>
+for 所有边利用宽搜模型去优化bellman_ford算法<br>
+更新队列中当前点的所有出边</p>
+<h3 id="floyd-on3"><strong>Floyd O(n^3)</strong></h3>
+<p>初始化d<br>
+k, i, j 去更新d</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[spfa算法]]></title>
         <id>https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/</id>
