@@ -9,7 +9,7 @@
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
 <title>Hello Gridea | leo-bao</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1612618024893">
+<link rel="shortcut icon" href="/favicon.ico?v=1612702396182">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -215,7 +215,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">8</span>
+        <span class="site-item-stat-count">9</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -237,7 +237,7 @@
       <div class="sidebar-item">
         <span class="site-item-rss">
             <i class="fa fa-rss"></i>
-            <a href="https://Leo-aiolia-bao.github.io/atom.xml" target="_blank">RSS</a>
+            <a href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
         </span>
       </div>
     
@@ -537,7 +537,7 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">
+    <a class="post-title-link" href="http://localhost:4000/post/hello-gridea/">
       Hello Gridea
     </a>
   </h1>
@@ -555,7 +555,7 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://Leo-aiolia-bao.github.io/tag/ECPze5fWU/">
+      <a href="http://localhost:4000/tag/ECPze5fWU/">
         <span>Gridea</span>
       </a>
       
@@ -609,7 +609,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://Leo-aiolia-bao.github.io/post/hello-gridea/" title="Hello Gridea">https://Leo-aiolia-bao.github.io/post/hello-gridea/</a>
+      <a href="http://localhost:4000/post/hello-gridea/" title="Hello Gridea">http://localhost:4000/post/hello-gridea/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -618,15 +618,15 @@
   </ul>
   <div class="tags">
     
-      <a href="https://Leo-aiolia-bao.github.io/tag/ECPze5fWU/"># Gridea</a>
+      <a href="http://localhost:4000/tag/ECPze5fWU/"># Gridea</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Markdown语法" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">Markdown语法</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Markdown语法" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">上一篇</a>
+        <a class="nav-pc-next" title="Markdown语法" href="http://localhost:4000/post/markdown-yu-fa/">Markdown语法</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Markdown语法" href="http://localhost:4000/post/markdown-yu-fa/">上一篇</a>
       
     </div>
     <div class="nav-next">
@@ -1621,7 +1621,166 @@
     <div class="result" id="result">
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/ran-se-fa-pan-ding-er-fen-tu/"" data-c="
+          &lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;奇数环：由奇数条边形成的一个环&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;二分图：当且仅当图中不含有奇数环，两个集合内部的内部没有边&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;算法1&#34;&gt;算法1&lt;/h3&gt;
+&lt;p&gt;使用bfs&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;约定染的颜色有1颜色和2颜色&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;时间复杂度-omn&#34;&gt;时间复杂度 O(m+n)&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;algorithm&amp;gt;
+#include &amp;lt;cstring&amp;gt;
+
+using namespace std;
+const int N = 100010, M = 200010;
+int n,m;
+int h[N], e[M], ne[M], idx;
+int color[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++;
+}
+
+bool dfs(int u, int c)
+{
+    color[u] = c;
+    for(int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if(!color[j])
+        {
+            if(!dfs(j, 3-c)) return false;
+        }
+        else if(color[j] == c) return false;
+    }
+    return true;
+}
+
+int main()
+{
+    scanf(&amp;quot;%d%d&amp;quot;, &amp;amp;n, &amp;amp;m);
+    memset(h, -1, sizeof h);
+    
+    while(m --)
+    {
+        int a, b;
+        scanf(&amp;quot;%d%d&amp;quot;, &amp;amp;a, &amp;amp;b);
+        add(a,b), add(b,a);
+    }
+    
+    bool flag = true;
+    for(int i = 1; i&amp;lt;= n; i++)
+    {
+        if(!color[i])
+        {
+            if(! dfs(i,1))
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+    
+    if(flag) puts(&amp;quot;Yes&amp;quot;);
+    else puts(&amp;quot;No&amp;quot;);
+    
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;导读什么是最大匹配&#34;&gt;导读：什么是最大匹配？&lt;/h1&gt;
+&lt;p&gt;要了解匈牙利算法必须先理解下面的概念：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;匹配：在图论中，一个「匹配」是一个边的集合，其中任意两条边都没有公共顶点。
+
+最大匹配：一个图所有匹配中，所含匹配边数最多的匹配，称为这个图的最大匹配。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;下面是一些补充概念：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;完美匹配：如果一个图的某个匹配中，所有的顶点都是匹配点，那么它就是一个完美匹配。
+
+交替路：从一个未匹配点出发，依次经过非匹配边、匹配边、非匹配边…形成的路径叫交替路。
+
+增广路：从一个未匹配点出发，走交替路，如果途径另一个未匹配点（出发的点不算），则这条交替 路称为增广路（agumenting path）。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;匈牙利算法&lt;br&gt;
+不讲算法证明(我也不会)。&lt;/p&gt;
+&lt;p&gt;用一个转载的例子来讲解匈牙利算法的流程。&lt;/p&gt;
+&lt;p&gt;代码实现匈牙利算法&lt;br&gt;
+首先是存图模板&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;//邻接表写法，存稀疏图
+int h[N],ne[N],e[N],idx;
+//n1,n2分别是两个点集的点的个数
+int n1,n2,m;
+void add(int a , int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+void init()
+{
+    memset(h,-1,sizeof h);
+}
+//存边只存一边就行了，虽然是无向图。
+for(int i = 0 ; i &amp;lt; n1 ; i ++)
+{
+    int a,b;
+    cin&amp;gt;&amp;gt;a&amp;gt;&amp;gt;b;
+    add(a,b);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下来看算法模板(c++)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;//match[j]=a,表示女孩j的现有配对男友是a
+int match[N];
+//st[]数组我称为临时预定数组，st[j]=a表示一轮模拟匹配中，女孩j被男孩a预定了。
+int st[N];
+
+//这个函数的作用是用来判断,如果加入x来参与模拟配对,会不会使匹配数增多
+int find(int x)
+{
+    //遍历自己喜欢的女孩
+    for(int i = h[x] ; i != -1 ;i = ne[i])
+    {
+        int j = e[i];
+        if(!st[j])//如果在这一轮模拟匹配中,这个女孩尚未被预定
+        {
+            st[j] = true;//那x就预定这个女孩了
+            //如果女孩j没有男朋友，或者她原来的男朋友能够预定其它喜欢的女孩。配对成功,更新match
+            if(!match[j]||find(match[j]))
+            {
+                match[j] = x;
+                return true;
+            }
+
+        }
+    }
+    //自己中意的全部都被预定了。配对失败。
+    return false;
+}
+
+//记录最大匹配
+int res = 0;
+for(int i = 1; i &amp;lt;= n1 ;i ++)
+{  
+    //因为每次模拟匹配的预定情况都是不一样的所以每轮模拟都要初始化
+    memset(st,false,sizeof st);
+    if(find(i)) 
+        res++;
+}  
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;下面用一个gif动图来演示这个整个配对的递归过程&#34;&gt;下面用一个gif动图来演示这个整个配对的递归过程：&lt;/h4&gt;
+">染色法判定二分图</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/floyd-suan-fa/"" data-c="
           &lt;h1 id=&#34;多源汇最短路问题-具有多个源点&#34;&gt;多源汇最短路问题-具有多个源点&lt;/h1&gt;
 &lt;h3 id=&#34;floyd算法-on3-动态规划&#34;&gt;Floyd算法 O(n^3)-动态规划&lt;/h3&gt;
 &lt;p&gt;给定一个n个点m条边的有向图，图中可能存在重边和自环，边权可能为负数。&lt;/p&gt;
@@ -1685,7 +1844,7 @@ int main() {
     return 0;
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1612618012689.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;http://localhost:4000/post-images/1612618012689.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
 &lt;h2 id=&#34;文字性复习&#34;&gt;&lt;strong&gt;文字性复习&lt;/strong&gt;&lt;/h2&gt;
 &lt;h3 id=&#34;dijkstra-朴素on2&#34;&gt;&lt;strong&gt;Dijkstra-朴素O(n^2)&lt;/strong&gt;&lt;/h3&gt;
 &lt;ol&gt;
@@ -1715,7 +1874,7 @@ k, i, j 去更新d&lt;/p&gt;
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/spfa-suan-fa/"" data-c="
           &lt;h3 id=&#34;算法分析&#34;&gt;算法分析&lt;/h3&gt;
 &lt;h4 id=&#34;1-什么是spfa算法&#34;&gt;1、什么是spfa算法？&lt;/h4&gt;
 &lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;SPFA 算法是 Bellman-Ford算法 的队列优化算法的别称，通常用于求含负权边的单源最短路径，以及判负权环。SPFA一般情况复杂度是O(m)O(m) 最坏情况下复杂度和朴素 Bellman-Ford 相同，为O(nm)O(nm)。
@@ -1912,8 +2071,8 @@ int main()
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/tu-lun/"" data-c="
-          &lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1612517738961.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/tu-lun/"" data-c="
+          &lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;http://localhost:4000/post-images/1612517738961.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
 &lt;p&gt;正权图&lt;br&gt;
 负权图&lt;br&gt;
 都可用SPFA 算法 一般O(m), 最坏O(mn)&lt;br&gt;
@@ -1925,7 +2084,7 @@ int main()
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/bellman_ford-suan-fa/"" data-c="
           &lt;h3 id=&#34;一-前导-算法分析&#34;&gt;(一) 前导 算法分析&lt;/h3&gt;
 &lt;p&gt;1、问题：为什么Dijkstra不能使用在含负权的图中？（在强大的网友指点下已进行修改）&lt;/p&gt;
 &lt;p&gt;正确的分析&lt;br&gt;
@@ -1935,7 +2094,7 @@ Dijkstra算法的3个步骤&lt;/p&gt;
 3. 用t号点更新其他点的距离
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;反例&lt;/p&gt;
-&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1612514547588.png&#34; alt=&#34;例子&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;http://localhost:4000/post-images/1612514547588.png&#34; alt=&#34;例子&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
 &lt;!-- more --&gt;
 &lt;p&gt;&lt;strong&gt;结果：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;dijkstra算法在图中走出来的最短路径是&lt;code&gt;1 -&amp;gt; 2 -&amp;gt; 4 -&amp;gt; 5&lt;/code&gt;，算出 1 号点到 5 号点的最短距离是&lt;code&gt;2 + 2 + 1 = 5&lt;/code&gt;，然而还存在一条路径是&lt;code&gt;1 -&amp;gt; 3 -&amp;gt; 4 -&amp;gt; 5&lt;/code&gt;，该路径的长度是&lt;code&gt;5 + (-2) + 1 = 4&lt;/code&gt;，因此 &lt;code&gt;dijkstra&lt;/code&gt; 算法失效&lt;br&gt;
@@ -2088,7 +2247,7 @@ int main(){
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/po-su-de-dijkstra-suan-fa/"" data-c="
           &lt;pre&gt;&lt;code&gt;日期：2021年2月4日
 时间：16点53分
 😅🏀🏀🕔
@@ -2213,7 +2372,7 @@ for(int j=1;j&amp;lt;=n;j++)
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/"" data-c="
           &lt;p&gt;几个教程如下：按部就班操作即可&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/blog/ak-ioi/building-a-blog/&#34;&gt;git 及 Gridea 教程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://gridea.dev/gridea-start/&#34;&gt;Gridea官网教程&lt;/a&gt;&lt;/p&gt;
@@ -2229,7 +2388,7 @@ for(int j=1;j&amp;lt;=n;j++)
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/markdown-yu-fa/"" data-c="
           &lt;p&gt;Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。&lt;/p&gt;
 &lt;p&gt;请仔细阅读下列文档，如果没有按照要求正确使用格式，将可能无法发出讨论，或者被删除。&lt;/p&gt;
 &lt;p&gt;段落和换行&lt;br&gt;
@@ -2394,7 +2553,7 @@ _   底线&lt;br&gt;
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/about/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/about/"" data-c="
           &lt;blockquote&gt;
 &lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -2406,7 +2565,7 @@ _   底线&lt;br&gt;
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/"" data-c="
+        <a class="result-title" style="opacity: 0;" href="http://localhost:4000/post/hello-gridea/"" data-c="
           &lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;
 ✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;
 &lt;!-- more --&gt;

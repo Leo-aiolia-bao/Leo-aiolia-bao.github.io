@@ -1,19 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://Leo-aiolia-bao.github.io</id>
+    <id>http://localhost:4000</id>
     <title>leo-bao</title>
-    <updated>2021-02-06T13:28:12.778Z</updated>
+    <updated>2021-02-07T13:10:13.874Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
-    <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
     <subtitle>科学派 | Think twice, code once</subtitle>
-    <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
-    <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
     <entry>
+        <title type="html"><![CDATA[染色法判定二分图]]></title>
+        <id>http://localhost:4000/post/ran-se-fa-pan-ding-er-fen-tu/</id>
+        <link href="http://localhost:4000/post/ran-se-fa-pan-ding-er-fen-tu/">
+        </link>
+        <updated>2021-02-07T06:27:52.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>
+<p>奇数环：由奇数条边形成的一个环</p>
+</li>
+<li>
+<p>二分图：当且仅当图中不含有奇数环，两个集合内部的内部没有边</p>
+</li>
+</ul>
+<h3 id="算法1">算法1</h3>
+<p>使用bfs</p>
+<ul>
+<li>约定染的颜色有1颜色和2颜色</li>
+</ul>
+<h4 id="时间复杂度-omn">时间复杂度 O(m+n)</h4>
+<pre><code class="language-c">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+const int N = 100010, M = 200010;
+int n,m;
+int h[N], e[M], ne[M], idx;
+int color[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++;
+}
+
+bool dfs(int u, int c)
+{
+    color[u] = c;
+    for(int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if(!color[j])
+        {
+            if(!dfs(j, 3-c)) return false;
+        }
+        else if(color[j] == c) return false;
+    }
+    return true;
+}
+
+int main()
+{
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    memset(h, -1, sizeof h);
+    
+    while(m --)
+    {
+        int a, b;
+        scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+        add(a,b), add(b,a);
+    }
+    
+    bool flag = true;
+    for(int i = 1; i&lt;= n; i++)
+    {
+        if(!color[i])
+        {
+            if(! dfs(i,1))
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+    
+    if(flag) puts(&quot;Yes&quot;);
+    else puts(&quot;No&quot;);
+    
+    return 0;
+}
+</code></pre>
+<h1 id="导读什么是最大匹配">导读：什么是最大匹配？</h1>
+<p>要了解匈牙利算法必须先理解下面的概念：</p>
+<pre><code>匹配：在图论中，一个「匹配」是一个边的集合，其中任意两条边都没有公共顶点。
+
+最大匹配：一个图所有匹配中，所含匹配边数最多的匹配，称为这个图的最大匹配。
+</code></pre>
+<p>下面是一些补充概念：</p>
+<pre><code>完美匹配：如果一个图的某个匹配中，所有的顶点都是匹配点，那么它就是一个完美匹配。
+
+交替路：从一个未匹配点出发，依次经过非匹配边、匹配边、非匹配边…形成的路径叫交替路。
+
+增广路：从一个未匹配点出发，走交替路，如果途径另一个未匹配点（出发的点不算），则这条交替 路称为增广路（agumenting path）。
+</code></pre>
+<p>匈牙利算法<br>
+不讲算法证明(我也不会)。</p>
+<p>用一个转载的例子来讲解匈牙利算法的流程。</p>
+<p>代码实现匈牙利算法<br>
+首先是存图模板</p>
+<pre><code class="language-c">//邻接表写法，存稀疏图
+int h[N],ne[N],e[N],idx;
+//n1,n2分别是两个点集的点的个数
+int n1,n2,m;
+void add(int a , int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+void init()
+{
+    memset(h,-1,sizeof h);
+}
+//存边只存一边就行了，虽然是无向图。
+for(int i = 0 ; i &lt; n1 ; i ++)
+{
+    int a,b;
+    cin&gt;&gt;a&gt;&gt;b;
+    add(a,b);
+}
+</code></pre>
+<p>接下来看算法模板(c++)</p>
+<pre><code class="language-c">//match[j]=a,表示女孩j的现有配对男友是a
+int match[N];
+//st[]数组我称为临时预定数组，st[j]=a表示一轮模拟匹配中，女孩j被男孩a预定了。
+int st[N];
+
+//这个函数的作用是用来判断,如果加入x来参与模拟配对,会不会使匹配数增多
+int find(int x)
+{
+    //遍历自己喜欢的女孩
+    for(int i = h[x] ; i != -1 ;i = ne[i])
+    {
+        int j = e[i];
+        if(!st[j])//如果在这一轮模拟匹配中,这个女孩尚未被预定
+        {
+            st[j] = true;//那x就预定这个女孩了
+            //如果女孩j没有男朋友，或者她原来的男朋友能够预定其它喜欢的女孩。配对成功,更新match
+            if(!match[j]||find(match[j]))
+            {
+                match[j] = x;
+                return true;
+            }
+
+        }
+    }
+    //自己中意的全部都被预定了。配对失败。
+    return false;
+}
+
+//记录最大匹配
+int res = 0;
+for(int i = 1; i &lt;= n1 ;i ++)
+{  
+    //因为每次模拟匹配的预定情况都是不一样的所以每轮模拟都要初始化
+    memset(st,false,sizeof st);
+    if(find(i)) 
+        res++;
+}  
+
+</code></pre>
+<h4 id="下面用一个gif动图来演示这个整个配对的递归过程">下面用一个gif动图来演示这个整个配对的递归过程：</h4>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Floyd 算法]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/">
+        <id>http://localhost:4000/post/floyd-suan-fa/</id>
+        <link href="http://localhost:4000/post/floyd-suan-fa/">
         </link>
         <updated>2021-02-06T13:20:19.000Z</updated>
         <content type="html"><![CDATA[<h1 id="多源汇最短路问题-具有多个源点">多源汇最短路问题-具有多个源点</h1>
@@ -79,7 +241,7 @@ int main() {
     return 0;
 }
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612618012689.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1612618012689.png" alt="" loading="lazy"></figure>
 <h2 id="文字性复习"><strong>文字性复习</strong></h2>
 <h3 id="dijkstra-朴素on2"><strong>Dijkstra-朴素O(n^2)</strong></h3>
 <ol>
@@ -109,8 +271,8 @@ k, i, j 去更新d</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[spfa算法]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/">
+        <id>http://localhost:4000/post/spfa-suan-fa/</id>
+        <link href="http://localhost:4000/post/spfa-suan-fa/">
         </link>
         <updated>2021-02-05T10:01:54.000Z</updated>
         <content type="html"><![CDATA[<h3 id="算法分析">算法分析</h3>
@@ -309,11 +471,11 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[图论]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/tu-lun/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/tu-lun/">
+        <id>http://localhost:4000/post/tu-lun/</id>
+        <link href="http://localhost:4000/post/tu-lun/">
         </link>
         <updated>2021-02-05T09:30:16.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612517738961.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1612517738961.png" alt="" loading="lazy"></figure>
 <p>正权图<br>
 负权图<br>
 都可用SPFA 算法 一般O(m), 最坏O(mn)<br>
@@ -325,8 +487,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[bellman_ford算法]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/">
+        <id>http://localhost:4000/post/bellman_ford-suan-fa/</id>
+        <link href="http://localhost:4000/post/bellman_ford-suan-fa/">
         </link>
         <updated>2021-02-05T08:40:35.000Z</updated>
         <summary type="html"><![CDATA[<h3 id="一-前导-算法分析">(一) 前导 算法分析</h3>
@@ -349,7 +511,7 @@ Dijkstra算法的3个步骤</p>
 3. 用t号点更新其他点的距离
 </code></pre>
 <p>反例</p>
-<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
 <!-- more -->
 <p><strong>结果：</strong></p>
 <p>dijkstra算法在图中走出来的最短路径是<code>1 -&gt; 2 -&gt; 4 -&gt; 5</code>，算出 1 号点到 5 号点的最短距离是<code>2 + 2 + 1 = 5</code>，然而还存在一条路径是<code>1 -&gt; 3 -&gt; 4 -&gt; 5</code>，该路径的长度是<code>5 + (-2) + 1 = 4</code>，因此 <code>dijkstra</code> 算法失效<br>
@@ -502,8 +664,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[朴素的Dijkstra算法]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/">
+        <id>http://localhost:4000/post/po-su-de-dijkstra-suan-fa/</id>
+        <link href="http://localhost:4000/post/po-su-de-dijkstra-suan-fa/">
         </link>
         <updated>2021-02-04T08:43:10.000Z</updated>
         <content type="html"><![CDATA[<pre><code>日期：2021年2月4日
@@ -630,8 +792,8 @@ for(int j=1;j&lt;=n;j++)
     </entry>
     <entry>
         <title type="html"><![CDATA[五分钟搭建自己的博客-github+gridea搭建博客和绑定域名]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">
+        <id>http://localhost:4000/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/</id>
+        <link href="http://localhost:4000/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">
         </link>
         <updated>2021-02-04T08:27:00.000Z</updated>
         <content type="html"><![CDATA[<p>几个教程如下：按部就班操作即可</p>
@@ -649,8 +811,8 @@ for(int j=1;j&lt;=n;j++)
     </entry>
     <entry>
         <title type="html"><![CDATA[Markdown语法]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">
+        <id>http://localhost:4000/post/markdown-yu-fa/</id>
+        <link href="http://localhost:4000/post/markdown-yu-fa/">
         </link>
         <updated>2021-02-04T04:12:11.000Z</updated>
         <content type="html"><![CDATA[<p>Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。</p>
@@ -817,8 +979,8 @@ _   底线<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/hello-gridea/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">
+        <id>http://localhost:4000/post/hello-gridea/</id>
+        <link href="http://localhost:4000/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
