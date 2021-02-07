@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://Leo-aiolia-bao.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-02-07T13:10:13.874Z</updated>
+    <updated>2021-02-07T13:45:41.218Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
+    <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
     <subtitle>科学派 | Think twice, code once</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
+    <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
+    <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
     <entry>
         <title type="html"><![CDATA[染色法判定二分图]]></title>
-        <id>http://localhost:4000/post/ran-se-fa-pan-ding-er-fen-tu/</id>
-        <link href="http://localhost:4000/post/ran-se-fa-pan-ding-er-fen-tu/">
+        <id>https://Leo-aiolia-bao.github.io/post/ran-se-fa-pan-ding-er-fen-tu/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/ran-se-fa-pan-ding-er-fen-tu/">
         </link>
         <updated>2021-02-07T06:27:52.000Z</updated>
         <content type="html"><![CDATA[<ul>
@@ -174,8 +174,8 @@ for(int i = 1; i &lt;= n1 ;i ++)
     </entry>
     <entry>
         <title type="html"><![CDATA[Floyd 算法]]></title>
-        <id>http://localhost:4000/post/floyd-suan-fa/</id>
-        <link href="http://localhost:4000/post/floyd-suan-fa/">
+        <id>https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/floyd-suan-fa/">
         </link>
         <updated>2021-02-06T13:20:19.000Z</updated>
         <content type="html"><![CDATA[<h1 id="多源汇最短路问题-具有多个源点">多源汇最短路问题-具有多个源点</h1>
@@ -241,7 +241,7 @@ int main() {
     return 0;
 }
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1612618012689.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612618012689.png" alt="" loading="lazy"></figure>
 <h2 id="文字性复习"><strong>文字性复习</strong></h2>
 <h3 id="dijkstra-朴素on2"><strong>Dijkstra-朴素O(n^2)</strong></h3>
 <ol>
@@ -271,8 +271,8 @@ k, i, j 去更新d</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[spfa算法]]></title>
-        <id>http://localhost:4000/post/spfa-suan-fa/</id>
-        <link href="http://localhost:4000/post/spfa-suan-fa/">
+        <id>https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/spfa-suan-fa/">
         </link>
         <updated>2021-02-05T10:01:54.000Z</updated>
         <content type="html"><![CDATA[<h3 id="算法分析">算法分析</h3>
@@ -471,11 +471,11 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[图论]]></title>
-        <id>http://localhost:4000/post/tu-lun/</id>
-        <link href="http://localhost:4000/post/tu-lun/">
+        <id>https://Leo-aiolia-bao.github.io/post/tu-lun/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/tu-lun/">
         </link>
         <updated>2021-02-05T09:30:16.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1612517738961.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612517738961.png" alt="" loading="lazy"></figure>
 <p>正权图<br>
 负权图<br>
 都可用SPFA 算法 一般O(m), 最坏O(mn)<br>
@@ -487,8 +487,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[bellman_ford算法]]></title>
-        <id>http://localhost:4000/post/bellman_ford-suan-fa/</id>
-        <link href="http://localhost:4000/post/bellman_ford-suan-fa/">
+        <id>https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/bellman_ford-suan-fa/">
         </link>
         <updated>2021-02-05T08:40:35.000Z</updated>
         <summary type="html"><![CDATA[<h3 id="一-前导-算法分析">(一) 前导 算法分析</h3>
@@ -511,7 +511,7 @@ Dijkstra算法的3个步骤</p>
 3. 用t号点更新其他点的距离
 </code></pre>
 <p>反例</p>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1612514547588.png" alt="例子" loading="lazy"></figure>
 <!-- more -->
 <p><strong>结果：</strong></p>
 <p>dijkstra算法在图中走出来的最短路径是<code>1 -&gt; 2 -&gt; 4 -&gt; 5</code>，算出 1 号点到 5 号点的最短距离是<code>2 + 2 + 1 = 5</code>，然而还存在一条路径是<code>1 -&gt; 3 -&gt; 4 -&gt; 5</code>，该路径的长度是<code>5 + (-2) + 1 = 4</code>，因此 <code>dijkstra</code> 算法失效<br>
@@ -664,8 +664,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[朴素的Dijkstra算法]]></title>
-        <id>http://localhost:4000/post/po-su-de-dijkstra-suan-fa/</id>
-        <link href="http://localhost:4000/post/po-su-de-dijkstra-suan-fa/">
+        <id>https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/">
         </link>
         <updated>2021-02-04T08:43:10.000Z</updated>
         <content type="html"><![CDATA[<pre><code>日期：2021年2月4日
@@ -792,8 +792,8 @@ for(int j=1;j&lt;=n;j++)
     </entry>
     <entry>
         <title type="html"><![CDATA[五分钟搭建自己的博客-github+gridea搭建博客和绑定域名]]></title>
-        <id>http://localhost:4000/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/</id>
-        <link href="http://localhost:4000/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">
+        <id>https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">
         </link>
         <updated>2021-02-04T08:27:00.000Z</updated>
         <content type="html"><![CDATA[<p>几个教程如下：按部就班操作即可</p>
@@ -811,8 +811,8 @@ for(int j=1;j&lt;=n;j++)
     </entry>
     <entry>
         <title type="html"><![CDATA[Markdown语法]]></title>
-        <id>http://localhost:4000/post/markdown-yu-fa/</id>
-        <link href="http://localhost:4000/post/markdown-yu-fa/">
+        <id>https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">
         </link>
         <updated>2021-02-04T04:12:11.000Z</updated>
         <content type="html"><![CDATA[<p>Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。</p>
@@ -979,8 +979,8 @@ _   底线<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>http://localhost:4000/post/hello-gridea/</id>
-        <link href="http://localhost:4000/post/hello-gridea/">
+        <id>https://Leo-aiolia-bao.github.io/post/hello-gridea/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
