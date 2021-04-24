@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
-<title>Markdown语法 | leo-bao</title>
+<title>01背包问题（状态转移方程） | leo-bao</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1619250819754">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,7 +38,7 @@
 
 
 
-  <meta name="description" content="Markdown语法" />
+  <meta name="description" content="01背包问题（状态转移方程）" />
   <meta name="keywords" content="" />
 </head>
 
@@ -267,17 +267,12 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li><a href="#%E8%BF%99%E6%98%AF-h1">这是 H1</a>
+<li>
 <ul>
-<li><a href="#%E8%BF%99%E6%98%AF-h2">这是 H2</a>
-<ul>
-<li><a href="#%E8%BF%99%E6%98%AF-h3">这是 H3</a></li>
-<li><a href="#%E6%88%91%E6%98%AF%E5%BC%95%E7%94%A8%E5%8C%BA%E5%9D%97%E5%86%85%E4%BD%BF%E7%94%A8%E6%A0%87%E9%A2%983%E8%AF%AD%E6%B3%95">我是引用区块内使用标题3语法</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE">题目：</a></li>
+<li><a href="#%E9%A2%98%E8%A7%A3">题解：</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#%E4%BA%95%E5%AD%97%E5%8F%B7">井字号</a></li>
 </ul>
 
   </div>
@@ -543,8 +538,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">
-      Markdown语法
+    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/01-bei-bao-wen-ti-zhuang-tai-zhuan-yi-fang-cheng/">
+      01背包问题（状态转移方程）
     </a>
   </h1>
   <div class="post-meta">
@@ -552,183 +547,125 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-04 12:12:11">2021-02-04</span>
+      <span class="publish-time" data-t="2021-02-10 11:43:30">2021-02-10</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>7<span class="language" data-lan="minute">分钟</span></span>
+      <span>4<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1715<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>654<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。</p>
-<p>请仔细阅读下列文档，如果没有按照要求正确使用格式，将可能无法发出讨论，或者被删除。</p>
-<p>段落和换行<br>
-一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行。普通的 Markdown 段落不可以用空格或制表符来缩进。</p>
-<p>空行：一行之内只包含回车换行、空格、制表符。</p>
-<p>标题<br>
-Markdown 的标题是在行首插入 1 到 6 个 # ，#和标题文字之间使用一个或多个空格，对应到标题 1 到 6 级。</p>
-<p>例如：</p>
-<h1 id="这是-h1">这是 H1</h1>
-<h2 id="这是-h2">这是 H2</h2>
-<h3 id="这是-h3">这是 H3</h3>
-<p>显示的效果如下：</p>
-<p>#这是 H1<br>
-##这是 H2<br>
-###这是 H3<br>
-不要全文使用标题，或者用标题强调特别多的文字。这会让读者觉得困扰。</p>
-<p>强调<br>
-Markdown 使用星号（*）和底线（<em>）作为标记强调字词的符号，被 * 或 _ 包围的字词会被转成用 <em> 标签包围（即斜体），用两个 * 或</em> 包起来的话，则会被转成 <strong>（即粗体）。</p>
-<p>例如：</p>
-<p><em>单引号斜体</em></p>
-<p><em>单下划线斜体</em></p>
-<p><strong>双引号加粗</strong></p>
-<p><strong>双下划线加粗</strong></p>
-<p><s>删除线</s><br>
-显示的效果如下：</p>
-<p>单引号斜体</p>
-<p>单下划线斜体</p>
-<p>双引号加粗</p>
-<p>双下划线加粗</p>
-<p>删除线</p>
-<p>但是如果你的 * 和 _ 两边都有空白的话，它们就只会被当成普通的符号。如果要在文字前后直接插入普通的星号或底线，你可以用反斜线（\）（参见下面的“反斜杠”部分）。</p>
-<p>例如：</p>
-<p>*使用反斜线开头的*被当做是普通的字符*<br>
-显示的效果如下：</p>
-<p><em>使用反斜线开头的</em>被当做是普通的字符*</p>
-<p>代码块<br>
-如果要发送代码，但没有按照下面的方式进行格式化，将不能发送成功。</p>
-<p>大段代码<br>
-Markdown建立代码块的方法：将<code>置于这段代码的首行和末行，独立成一行。第一行的</code>后面可以加上语言名称，例如 cpp、java、c、pascal 等（不要写成 c++）。</p>
-<p>例如：</p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
+              <h2 id="题目">题目：</h2>
+<p>有 N 件物品和一个容量是 V 的背包。每件物品只能使用一次。</p>
+<p>第 i 件物品的体积是 vi，价值是 wi。</p>
+<p>求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。<br>
+输出最大价值。</p>
+<p><strong>输入格式</strong><br>
+第一行两个整数，N，V，用空格隔开，分别表示物品数量和背包容积。</p>
+<p>接下来有 N 行，每行两个整数 vi,wi，用空格隔开，分别表示第 i 件物品的体积和价值。</p>
+<p><strong>输出格式</strong><br>
+输出一个整数，表示最大价值。</p>
+<p><strong>数据范围</strong><br>
+<code>0&lt;N,V≤1000</code><br>
+<code>0&lt;vi,wi≤1000</code><br>
+<strong>输入样例</strong><br>
+<code>4 5</code><br>
+<code>1 2</code><br>
+<code>2 4</code><br>
+<code>3 4</code><br>
+<code>4 5</code><br>
+<strong>输出样例：</strong><br>
+<code>8</code></p>
+<h2 id="题解">题解：</h2>
+<p><strong>二维数组+动规</strong><br>
+状态转移方程：<br>
+定义<code>f[i][j]</code>:前 i 个物品，背包容量 j下的最优解</p>
+<p>1）当前背包容量不够（<code>j &lt; w[i]</code>），为前 i−1 个物品最优解：<code>f[i][j] = f[i-1][j]</code><br>
+2）当前背包容量够，判断选与不选第 i个物品<br>
+选：<code>f[i][j] = f[i-1][j-w[i]] + v[i]</code><br>
+不选：<code>f[i][j] = f[i-1][j]</code></p>
+<p>C++ 代码</p>
+<pre><code class="language-c">#include&lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+const int MAXN = 1005;
+int w[MAXN];    // 重量 
+int v[MAXN];    // 价值 
+int f[MAXN][MAXN];  // f[i][j], j重量下前i个物品的最大价值 
+
+int main() 
+{
+    int n, m;   
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i &lt;= n; ++i) 
+        cin &gt;&gt; w[i] &gt;&gt; v[i];
+
+    for(int i = 1; i &lt;= n; ++i) 
+        for(int j = 1; j &lt;= m; ++j)
+        { 
+            //  当前重量装不进，价值等于前i-1个物品
+            if(j &lt; w[i]) 
+                f[i][j] = f[i-1][j];
+            // 能装，需判断 
+            else    
+                f[i][j] = max(f[i-1][j], f[i-1][j-w[i]] + v[i]);
+        }           
+
+    cout &lt;&lt; f[n][m];
+    return 0;
+}
 </code></pre>
-<p>显示成</p>
-<p>#include<iostream><br>
-小段代码<br>
-需要引用代码时，如果引用的语句只有一段，不分行，可以用`将语句包起来。</p>
-<p>注：如果你真的要打<code>这个字符的话，可以仿照和*这个字符一样的处理方式，在</code>前加一个反斜杠。</p>
-<p>区块引用<br>
-Markdown 标记区块引用的方法是在行的最前面加 &gt; ，也可以只在整个段落的第一行最前面加上 &gt;，区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可，引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等。</p>
-<p>例如:</p>
-<blockquote>
-<p>Markdown 标记区块引用的方法是在行的最前面加&gt;</p>
-<p>也可以只在整个段落的第一行最前面加上 &gt;</p>
-<blockquote>
-<p>区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可.</p>
-<p><em>我是内部嵌套区块，我可以使用其他 Markdown 语法哦</em></p>
-<h3 id="我是引用区块内使用标题3语法">我是引用区块内使用标题3语法</h3>
-<pre><code class="language-java">     //在引用区块内可以加入代码块
-     import java.net.URL;
-     import java.util.Arrays;
-     import java.util.Date;
-     import java.util.Set;
+<p>优化<br>
+<strong>(动规+一维数组)</strong><br>
+状态转移方程为：<code>f[j] = max(f[j], f[j-w[i]] + v[i]</code></p>
+<p>C++ 代码</p>
+<pre><code class="language-c">for(int i = 1; i &lt;= n; ++i)
+{
+    for(int j = m; j &gt;= 0; --j) 
+        if(j &gt;= w[i])
+            f[j] = max(f[j], f[j-w[i]] + v[i]);
+} 
 </code></pre>
-</blockquote>
-</blockquote>
-<p>显示的效果如下：</p>
-<p>Markdown 标记区块引用的方法是在行的最前面加&gt;</p>
-<p>也可以只在整个段落的第一行最前面加上 &gt;</p>
-<p>区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可.</p>
-<p>我是内部嵌套区块，我可以使用其他 Markdown 语法哦</p>
-<p>我是引用区块内使用标题3语法<br>
-//在引用区块内可以加入代码块<br>
-import java.net.URL;<br>
-import java.util.Arrays;<br>
-import java.util.Date;<br>
-import java.util.Set;<br>
-列表<br>
-Markdown 支持有序列表和无序列表，无序列表使用星号、加号或是减号作为列表标记，有序列表则使用数字接着一个英文句点。两种列表方式格式都是：列表标记+空格+列表项，即列表项目标记通常是放在最左边，也可以缩进最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
-<p>(1)无序列表<br>
-星号、加号或是减号三种列表方式效果等同。</p>
-<p>例如：</p>
 <ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
+<li>注意枚举j必须从m开始</li>
 </ul>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue<br>
-它们的显示效果均为：</li>
-</ul>
-<p>Red<br>
-Green<br>
-Blue<br>
-(2)有序列表<br>
-有序列表则使用数字接着一个英文句点。</p>
-<p>例如：</p>
-<ol>
-<li>Red</li>
-<li>Green</li>
-<li>Blue<br>
-显示效果为：</li>
-</ol>
-<p>Red<br>
-Green<br>
-Blue<br>
-链接<br>
-在方块括号后面紧接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
-<p>这是 行内式链接标题 内联方式.</p>
-<p><a href="http://www.luogu.org/">行内式链接标题</a><br>
-图片<br>
-Markdown 使用一种和链接很相似的语法来标记图片</p>
-<p>行内式的图片语法如下：</p>
-<figure data-type="image" tabindex="1"><img src="%E5%9B%BE%E7%89%87%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84" alt="图片下方文字" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="%E5%9B%BE%E7%89%87%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84" alt="图片下方文字" title="可选标题" loading="lazy"></figure>
-<p>详细叙述如下：一个惊叹号!，接着一个方括号，里面放上图片的替代文字（这些文字将在图片加载失败的时候显示），接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 'title' 文字。</p>
-<p>例如：</p>
-<p><img src="https://cdn.class.luogu.com.cn/fe/logo-full.png?27925f707b34b1472e135b1a2dd848e5" alt="logo" loading="lazy"><br>
-将会显示图片：</p>
-<p>logo</p>
-<p>自动链接<br>
-Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用尖括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p>
-<p><a href="https://www.luogu.com.cn/">https://www.luogu.com.cn/</a><br>
-显示效果为：</p>
-<p>https://www.luogu.com.cn/</p>
-<p>分隔线<br>
-可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他内容。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<p>显示的效果如下：</p>
-<p>反斜杠<br>
-Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用<em>标签），你可以在星号的前面加上反斜杠。</p>
-<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号（加上反斜杠后，这些符号都会以原来的方式显示）：</p>
-<p>\   反斜线<br>
-`   反引号</p>
-<ul>
-<li>星号<br>
-_   底线<br>
-{}  花括号<br>
-[]  方括号<br>
-()  括弧</li>
-</ul>
-<h1 id="井字号">井字号</h1>
-<ul>
-<li>加号</li>
-</ul>
-<ul>
-<li>减号<br>
-.   英文句点<br>
-!   惊叹号</li>
-</ul>
+<pre><code class="language-c">//有优化版
+/*
+1. f[i] 仅用到了f[i-1]层, 
+2. j与j-v[i] 均小于j
+3.若用到上一层的状态时,从大到小枚举, 反之从小到大哦
+*/
+#include &lt;iostream&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n, m;
+int v[N], w[N];
+int f[N];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i &lt;= n; i++) cin &gt;&gt; v[i] &gt;&gt; w[i];
+    for(int i = 1; i &lt;= n; i++) 
+        for(int j = m; j &gt;= v[i]; j--) 
+            f[j] = max(f[j], f[j-v[i]]+w[i]);
+    cout &lt;&lt; f[m] &lt;&lt; endl;
+ return 0;    
+}
+
+</code></pre>
 
             </div>
             
@@ -741,7 +678,7 @@ _   底线<br>
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/" title="Markdown语法">https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/</a>
+      <a href="https://Leo-aiolia-bao.github.io/post/01-bei-bao-wen-ti-zhuang-tai-zhuan-yi-fang-cheng/" title="01背包问题（状态转移方程）">https://Leo-aiolia-bao.github.io/post/01-bei-bao-wen-ti-zhuang-tai-zhuan-yi-fang-cheng/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -755,14 +692,14 @@ _   底线<br>
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">五分钟搭建自己的博客-github+gridea搭建博客和绑定域名</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">上一篇</a>
+        <a class="nav-pc-next" title="排列数字(字典序)" href="https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/">排列数字(字典序)</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="排列数字(字典序)" href="https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Hello Gridea" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">Hello Gridea</a>
-        <a class="nav-mobile-next" title="Hello Gridea" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">下一篇</a>
+        <a class="nav-pc-next" title="染色法判定二分图" href="https://Leo-aiolia-bao.github.io/post/ran-se-fa-pan-ding-er-fen-tu/">染色法判定二分图</a>
+        <a class="nav-mobile-next" title="染色法判定二分图" href="https://Leo-aiolia-bao.github.io/post/ran-se-fa-pan-ding-er-fen-tu/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

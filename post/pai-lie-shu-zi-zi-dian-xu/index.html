@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
-<title>Markdown语法 | leo-bao</title>
+<title>排列数字(字典序) | leo-bao</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1619250819754">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,7 +38,7 @@
 
 
 
-  <meta name="description" content="Markdown语法" />
+  <meta name="description" content="排列数字(字典序)" />
   <meta name="keywords" content="" />
 </head>
 
@@ -267,17 +267,19 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li><a href="#%E8%BF%99%E6%98%AF-h1">这是 H1</a>
+<li>
 <ul>
-<li><a href="#%E8%BF%99%E6%98%AF-h2">这是 H2</a>
+<li>
 <ul>
-<li><a href="#%E8%BF%99%E6%98%AF-h3">这是 H3</a></li>
-<li><a href="#%E6%88%91%E6%98%AF%E5%BC%95%E7%94%A8%E5%8C%BA%E5%9D%97%E5%86%85%E4%BD%BF%E7%94%A8%E6%A0%87%E9%A2%983%E8%AF%AD%E6%B3%95">我是引用区块内使用标题3语法</a></li>
+<li>
+<ul>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#%E4%BA%95%E5%AD%97%E5%8F%B7">井字号</a></li>
+</ul>
+</li>
 </ul>
 
   </div>
@@ -543,8 +545,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">
-      Markdown语法
+    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/">
+      排列数字(字典序)
     </a>
   </h1>
   <div class="post-meta">
@@ -552,183 +554,90 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-04 12:12:11">2021-02-04</span>
+      <span class="publish-time" data-t="2021-04-07 20:30:23">2021-04-07</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>7<span class="language" data-lan="minute">分钟</span></span>
+      <span>2<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1715<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>319<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。</p>
-<p>请仔细阅读下列文档，如果没有按照要求正确使用格式，将可能无法发出讨论，或者被删除。</p>
-<p>段落和换行<br>
-一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行。普通的 Markdown 段落不可以用空格或制表符来缩进。</p>
-<p>空行：一行之内只包含回车换行、空格、制表符。</p>
-<p>标题<br>
-Markdown 的标题是在行首插入 1 到 6 个 # ，#和标题文字之间使用一个或多个空格，对应到标题 1 到 6 级。</p>
-<p>例如：</p>
-<h1 id="这是-h1">这是 H1</h1>
-<h2 id="这是-h2">这是 H2</h2>
-<h3 id="这是-h3">这是 H3</h3>
-<p>显示的效果如下：</p>
-<p>#这是 H1<br>
-##这是 H2<br>
-###这是 H3<br>
-不要全文使用标题，或者用标题强调特别多的文字。这会让读者觉得困扰。</p>
-<p>强调<br>
-Markdown 使用星号（*）和底线（<em>）作为标记强调字词的符号，被 * 或 _ 包围的字词会被转成用 <em> 标签包围（即斜体），用两个 * 或</em> 包起来的话，则会被转成 <strong>（即粗体）。</p>
-<p>例如：</p>
-<p><em>单引号斜体</em></p>
-<p><em>单下划线斜体</em></p>
-<p><strong>双引号加粗</strong></p>
-<p><strong>双下划线加粗</strong></p>
-<p><s>删除线</s><br>
-显示的效果如下：</p>
-<p>单引号斜体</p>
-<p>单下划线斜体</p>
-<p>双引号加粗</p>
-<p>双下划线加粗</p>
-<p>删除线</p>
-<p>但是如果你的 * 和 _ 两边都有空白的话，它们就只会被当成普通的符号。如果要在文字前后直接插入普通的星号或底线，你可以用反斜线（\）（参见下面的“反斜杠”部分）。</p>
-<p>例如：</p>
-<p>*使用反斜线开头的*被当做是普通的字符*<br>
-显示的效果如下：</p>
-<p><em>使用反斜线开头的</em>被当做是普通的字符*</p>
-<p>代码块<br>
-如果要发送代码，但没有按照下面的方式进行格式化，将不能发送成功。</p>
-<p>大段代码<br>
-Markdown建立代码块的方法：将<code>置于这段代码的首行和末行，独立成一行。第一行的</code>后面可以加上语言名称，例如 cpp、java、c、pascal 等（不要写成 c++）。</p>
-<p>例如：</p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
+              <p><strong>题目描述：</strong></p>
+<p>给定一个整数 n，将数字 1∼n 排成一排，将会有很多种排列方法。</p>
+<p>现在，请你按照字典序将所有的排列方法输出。</p>
+<p><strong>输入格式</strong><br>
+共一行，包含一个整数 n。</p>
+<p><strong>输出格式</strong><br>
+按字典序输出所有排列方案，每个方案占一行。</p>
+<p><strong>数据范围</strong><br>
+1≤n≤7<br>
+<strong>输入样例：</strong><br>
+3<br>
+<strong>输出样例</strong>：<br>
+1 2 3<br>
+1 3 2<br>
+2 1 3<br>
+2 3 1<br>
+3 1 2<br>
+3 2 1</p>
+<p>dfs() :<br>
+此题中dfs表示的含义是：求出从第u行到最后一行的所有path。<br>
+dfs的求法：根据通项公式的含义，假设已知第u+1行到最后一行的所有path，综合1和2得出：path[u] 与 path[u+1] 合并后，即为dfs的解。</p>
+<h4 id="代码">代码</h4>
+<pre><code class="language-c">#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 10;
+int path[N];
+bool st[N];
+int n;
+
+
+
+void dfs(int u)
+{
+    if(u == n )
+   {        //存储从0
+       for(int i = 0 ;i &lt; n; i++) cout &lt;&lt; path[i] &lt;&lt; ' ' ;
+        cout &lt;&lt; endl; // puts(&quot;&quot;);
+        return ;
+   }
+   
+    //数字从1开始存储打印
+    for(int i = 1; i&lt;= n; i++){
+        if(!st[i])
+        {
+            path[u] = i;  // 存储当前 路径
+            st[i] = true; // 标记
+            dfs(u + 1);   // 下一次搜索
+            st[i] = false;  // 恢复现场， 为了不影响下一次搜索
+            
+        }
+        
+    }
+    
+}
+
+int main()
+{
+    cin &gt;&gt; n;
+    
+    dfs(0);
+    
+    
+    return 0;
+}
+
 </code></pre>
-<p>显示成</p>
-<p>#include<iostream><br>
-小段代码<br>
-需要引用代码时，如果引用的语句只有一段，不分行，可以用`将语句包起来。</p>
-<p>注：如果你真的要打<code>这个字符的话，可以仿照和*这个字符一样的处理方式，在</code>前加一个反斜杠。</p>
-<p>区块引用<br>
-Markdown 标记区块引用的方法是在行的最前面加 &gt; ，也可以只在整个段落的第一行最前面加上 &gt;，区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可，引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等。</p>
-<p>例如:</p>
-<blockquote>
-<p>Markdown 标记区块引用的方法是在行的最前面加&gt;</p>
-<p>也可以只在整个段落的第一行最前面加上 &gt;</p>
-<blockquote>
-<p>区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可.</p>
-<p><em>我是内部嵌套区块，我可以使用其他 Markdown 语法哦</em></p>
-<h3 id="我是引用区块内使用标题3语法">我是引用区块内使用标题3语法</h3>
-<pre><code class="language-java">     //在引用区块内可以加入代码块
-     import java.net.URL;
-     import java.util.Arrays;
-     import java.util.Date;
-     import java.util.Set;
-</code></pre>
-</blockquote>
-</blockquote>
-<p>显示的效果如下：</p>
-<p>Markdown 标记区块引用的方法是在行的最前面加&gt;</p>
-<p>也可以只在整个段落的第一行最前面加上 &gt;</p>
-<p>区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可.</p>
-<p>我是内部嵌套区块，我可以使用其他 Markdown 语法哦</p>
-<p>我是引用区块内使用标题3语法<br>
-//在引用区块内可以加入代码块<br>
-import java.net.URL;<br>
-import java.util.Arrays;<br>
-import java.util.Date;<br>
-import java.util.Set;<br>
-列表<br>
-Markdown 支持有序列表和无序列表，无序列表使用星号、加号或是减号作为列表标记，有序列表则使用数字接着一个英文句点。两种列表方式格式都是：列表标记+空格+列表项，即列表项目标记通常是放在最左边，也可以缩进最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
-<p>(1)无序列表<br>
-星号、加号或是减号三种列表方式效果等同。</p>
-<p>例如：</p>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue<br>
-它们的显示效果均为：</li>
-</ul>
-<p>Red<br>
-Green<br>
-Blue<br>
-(2)有序列表<br>
-有序列表则使用数字接着一个英文句点。</p>
-<p>例如：</p>
-<ol>
-<li>Red</li>
-<li>Green</li>
-<li>Blue<br>
-显示效果为：</li>
-</ol>
-<p>Red<br>
-Green<br>
-Blue<br>
-链接<br>
-在方块括号后面紧接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
-<p>这是 行内式链接标题 内联方式.</p>
-<p><a href="http://www.luogu.org/">行内式链接标题</a><br>
-图片<br>
-Markdown 使用一种和链接很相似的语法来标记图片</p>
-<p>行内式的图片语法如下：</p>
-<figure data-type="image" tabindex="1"><img src="%E5%9B%BE%E7%89%87%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84" alt="图片下方文字" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="%E5%9B%BE%E7%89%87%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84" alt="图片下方文字" title="可选标题" loading="lazy"></figure>
-<p>详细叙述如下：一个惊叹号!，接着一个方括号，里面放上图片的替代文字（这些文字将在图片加载失败的时候显示），接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 'title' 文字。</p>
-<p>例如：</p>
-<p><img src="https://cdn.class.luogu.com.cn/fe/logo-full.png?27925f707b34b1472e135b1a2dd848e5" alt="logo" loading="lazy"><br>
-将会显示图片：</p>
-<p>logo</p>
-<p>自动链接<br>
-Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用尖括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p>
-<p><a href="https://www.luogu.com.cn/">https://www.luogu.com.cn/</a><br>
-显示效果为：</p>
-<p>https://www.luogu.com.cn/</p>
-<p>分隔线<br>
-可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他内容。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<p>显示的效果如下：</p>
-<p>反斜杠<br>
-Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用<em>标签），你可以在星号的前面加上反斜杠。</p>
-<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号（加上反斜杠后，这些符号都会以原来的方式显示）：</p>
-<p>\   反斜线<br>
-`   反引号</p>
-<ul>
-<li>星号<br>
-_   底线<br>
-{}  花括号<br>
-[]  方括号<br>
-()  括弧</li>
-</ul>
-<h1 id="井字号">井字号</h1>
-<ul>
-<li>加号</li>
-</ul>
-<ul>
-<li>减号<br>
-.   英文句点<br>
-!   惊叹号</li>
-</ul>
 
             </div>
             
@@ -741,7 +650,7 @@ _   底线<br>
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/" title="Markdown语法">https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/</a>
+      <a href="https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/" title="排列数字(字典序)">https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -755,14 +664,14 @@ _   底线<br>
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">五分钟搭建自己的博客-github+gridea搭建博客和绑定域名</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">上一篇</a>
+        <a class="nav-pc-next" title="C/C++重定向" href="https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/">C/C++重定向</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="C/C++重定向" href="https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Hello Gridea" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">Hello Gridea</a>
-        <a class="nav-mobile-next" title="Hello Gridea" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">下一篇</a>
+        <a class="nav-pc-next" title="01背包问题（状态转移方程）" href="https://Leo-aiolia-bao.github.io/post/01-bei-bao-wen-ti-zhuang-tai-zhuan-yi-fang-cheng/">01背包问题（状态转移方程）</a>
+        <a class="nav-mobile-next" title="01背包问题（状态转移方程）" href="https://Leo-aiolia-bao.github.io/post/01-bei-bao-wen-ti-zhuang-tai-zhuan-yi-fang-cheng/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

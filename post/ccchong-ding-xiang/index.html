@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
-<title>Markdown语法 | leo-bao</title>
+<title>C/C++重定向 | leo-bao</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1619250819754">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,7 +38,7 @@
 
 
 
-  <meta name="description" content="Markdown语法" />
+  <meta name="description" content="C/C++重定向" />
   <meta name="keywords" content="" />
 </head>
 
@@ -203,8 +203,7 @@
       <div class="sidebar-body pisces" id="sidebar_body">
         
           
-            <div class="post-side-meta" id="post_side_meta">
-              
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -261,201 +260,6 @@
 
 
 </div>
-            </div>
-            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-              <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto"
-    id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li><a href="#%E8%BF%99%E6%98%AF-h1">这是 H1</a>
-<ul>
-<li><a href="#%E8%BF%99%E6%98%AF-h2">这是 H2</a>
-<ul>
-<li><a href="#%E8%BF%99%E6%98%AF-h3">这是 H3</a></li>
-<li><a href="#%E6%88%91%E6%98%AF%E5%BC%95%E7%94%A8%E5%8C%BA%E5%9D%97%E5%86%85%E4%BD%BF%E7%94%A8%E6%A0%87%E9%A2%983%E8%AF%AD%E6%B3%95">我是引用区块内使用标题3语法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E4%BA%95%E5%AD%97%E5%8F%B7">井字号</a></li>
-</ul>
-
-  </div>
-</div>
-
-<script>
-
-  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
-  let active = 'active-show', activeClass = 'active-current';
-  let tocWrapper = document.querySelector('#toc_wrapper');
-  let tocContent = tocWrapper.children[0];
-  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
-
-  function addTocNumber(elem, deep) {
-    if (!elem) {
-      return;
-    }
-    let prop = elem.__proto__;
-
-    if (prop === HTMLUListElement.prototype) {
-      for (let i = 0; i < elem.children.length; i++) {
-        addTocNumber(elem.children[i], deep + (i + 1) + '.');
-      }
-    } else if (prop === HTMLLIElement.prototype) {
-      // 保存li元素
-      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
-        lList.push(elem);
-      }
-      for (let i = 0; i < elem.children.length; i++) {
-        let cur = elem.children[i];
-        if (cur.__proto__ === HTMLAnchorElement.prototype) {
-          if (autoNumber) {
-            cur.text = deep + ' ' + cur.text;
-          }
-        } else if (cur.__proto__ === HTMLUListElement.prototype) {
-          addTocNumber(cur, deep);
-        }
-      }
-    }
-  }
-
-  function removeParentActiveClass() {
-    let parents = tocContent.querySelectorAll('.' + active)
-    parents.forEach(function (elem) {
-      elem.classList.remove(active);
-    });
-  }
-
-  function addActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.add(activeClass);
-    }
-  }
-
-  function removeActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.remove(activeClass);
-    }
-  }
-
-  function addActiveLiElemment(elem, parent) {
-    if (!elem || elem === parent) {
-      return;
-    } else {
-      if (elem.__proto__ === HTMLLIElement.prototype) {
-        elem.classList.add(active);
-      }
-      addActiveLiElemment(elem.parentElement, parent);
-    }
-  }
-
-  function showToc() {
-    if (tocWrapper) {
-      postBody = document.querySelector('#post_body');
-      for (let i = 0; i < postBody.children.length; i++) {
-        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-          hList.push(postBody.children[i]);
-        }
-      }
-      if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-      } else if (tocWrapper.classList.contains('no_compress')) {
-        tocContent.classList.add('expanded');
-      } else {
-        if (hList.length > 10) {
-          active = 'active-hidden'
-          tocContent.classList.add('closed');
-        } else {
-          tocContent.classList.add('expanded');
-        }
-      }
-    }
-  }
-
-  (function () {
-    // 处理不是从#一级标题开始目录
-    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
-      let con = tocContent.children[0].children[0];
-      tocContent.innerHTML = con.innerHTML;
-    }
-    let markdownItTOC = document.querySelector('.markdownIt-TOC');
-    let innerHeight = window.innerHeight;
-    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
-    addTocNumber(tocContent, '');
-  })();
-
-  document.addEventListener('scroll', function (e) {
-    if (lList.length <= 0) {
-      return;
-    }
-    let scrollTop = document.scrollingElement.scrollTop + 10;
-    let dir;
-
-    if (lastTop - scrollTop > 0) {
-      dir = 'up';
-    } else {
-      dir = 'down';
-    }
-
-    lastTop = scrollTop;
-    if (scrollTop <= 0) {
-      if (lastIndex >= 0 && lastIndex < hList.length) {
-        lList[lastIndex].classList.remove(activeClass);
-      }
-      return;
-    }
-
-    let current = 0, hasFind = false;
-    for (let i = 0; i < hList.length; i++) {
-      if (hList[i].offsetTop > scrollTop) {
-        current = i;
-        hasFind = true;
-        break;
-      }
-    }
-    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-      current = hList.length - 1;
-    } else {
-      current--;
-    }
-    if (dir === 'down') {
-      if (current > lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex)
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    } else {
-      if (current < lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex);
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    }
-  });
-
-
-  window.addEventListener('load', function () {
-    showToc();
-    document.querySelector('#sidebar').style = 'display: block;';
-    tocWrapper.classList.add('toc-active');
-    setTimeout(function () {
-      if ("createEvent" in document) {
-        let evt = document.createEvent("HTMLEvents");
-        evt.initEvent("scroll", false, true);
-        document.dispatchEvent(evt);
-      }
-      else {
-        document.fireEvent("scroll");
-      }
-    }, 500)
-  })
-
-</script>
-            </div>
           
         
       </div>
@@ -543,8 +347,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/">
-      Markdown语法
+    <a class="post-title-link" href="https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/">
+      C/C++重定向
     </a>
   </h1>
   <div class="post-meta">
@@ -552,183 +356,141 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-04 12:12:11">2021-02-04</span>
+      <span class="publish-time" data-t="2021-04-24 15:41:25">2021-04-24</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>7<span class="language" data-lan="minute">分钟</span></span>
+      <span>5<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1715<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>953<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>Markdown 的目标是实现「易读易写」，成为一种适用于网络的书写语言。因此洛谷使用 Markdown 发布内容。</p>
-<p>请仔细阅读下列文档，如果没有按照要求正确使用格式，将可能无法发出讨论，或者被删除。</p>
-<p>段落和换行<br>
-一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行。普通的 Markdown 段落不可以用空格或制表符来缩进。</p>
-<p>空行：一行之内只包含回车换行、空格、制表符。</p>
-<p>标题<br>
-Markdown 的标题是在行首插入 1 到 6 个 # ，#和标题文字之间使用一个或多个空格，对应到标题 1 到 6 级。</p>
-<p>例如：</p>
-<h1 id="这是-h1">这是 H1</h1>
-<h2 id="这是-h2">这是 H2</h2>
-<h3 id="这是-h3">这是 H3</h3>
-<p>显示的效果如下：</p>
-<p>#这是 H1<br>
-##这是 H2<br>
-###这是 H3<br>
-不要全文使用标题，或者用标题强调特别多的文字。这会让读者觉得困扰。</p>
-<p>强调<br>
-Markdown 使用星号（*）和底线（<em>）作为标记强调字词的符号，被 * 或 _ 包围的字词会被转成用 <em> 标签包围（即斜体），用两个 * 或</em> 包起来的话，则会被转成 <strong>（即粗体）。</p>
-<p>例如：</p>
-<p><em>单引号斜体</em></p>
-<p><em>单下划线斜体</em></p>
-<p><strong>双引号加粗</strong></p>
-<p><strong>双下划线加粗</strong></p>
-<p><s>删除线</s><br>
-显示的效果如下：</p>
-<p>单引号斜体</p>
-<p>单下划线斜体</p>
-<p>双引号加粗</p>
-<p>双下划线加粗</p>
-<p>删除线</p>
-<p>但是如果你的 * 和 _ 两边都有空白的话，它们就只会被当成普通的符号。如果要在文字前后直接插入普通的星号或底线，你可以用反斜线（\）（参见下面的“反斜杠”部分）。</p>
-<p>例如：</p>
-<p>*使用反斜线开头的*被当做是普通的字符*<br>
-显示的效果如下：</p>
-<p><em>使用反斜线开头的</em>被当做是普通的字符*</p>
-<p>代码块<br>
-如果要发送代码，但没有按照下面的方式进行格式化，将不能发送成功。</p>
-<p>大段代码<br>
-Markdown建立代码块的方法：将<code>置于这段代码的首行和末行，独立成一行。第一行的</code>后面可以加上语言名称，例如 cpp、java、c、pascal 等（不要写成 c++）。</p>
-<p>例如：</p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
+              <p>C/C++重定向 标准输入输出 的库函数。</p>
+<p>所谓重定向输出，就是可以把原本只是输出在控制台的字符，输出到你指定的路径文件中。(输入类似，就是从指定的文件中读取，而不是读取在控制台中的输入。)重定向函数可以在任何时候开启、关闭。</p>
+<p>函数名：freopen</p>
+<p>标准声明：FILE *freopen( const char *path, const char *mode, FILE *stream );</p>
+<p>所在文件： &lt;stdio.h&gt;</p>
+<p>参数说明：</p>
+<p>path: 文件名，用于存储输入输出的自定义文件名。</p>
+<p>mode: 文件打开的模式。和fopen中的模式（如r-只读, w-写）相同。</p>
+<p>stream: 一个文件，通常使用标准流文件。</p>
+<p>返回值：成功，则返回一个path所指定文件的指针；失败，返回NULL。</p>
+<p>功能：实现重定向，把预定义的标准流文件定向到由path指定的文件中。标准流文件具体是指stdin、stdout和stderr。其中stdin是标准输入流，默认为键盘；stdout是标准输出流，默认为屏幕；stderr是标准错误流，一般把屏幕设为默认。</p>
+<p>注意freopen()的地址格式！必须是双斜杠\ !!!!</p>
+<pre><code class="language-c">
+#include&lt;iostream&gt;
+#include&lt;stdio.h&gt;
+using namespace std;
+//0x3f3f3f3f为无穷大常量（一个10^9数量级的数） 
+#define INF 0x3f3f3f3f
+void swap(int &amp;x,int &amp;y){ //交换数值
+	x^=y;
+	y^=x;
+	x^=y;
+}
+int main()
+{
+	//注意freopen()的地址格式！必须是双斜杠\\ !!!! 
+	freopen(&quot;D:\\CZHSoftware\\C语言\\Dev编程h\\freopen\\freopenTest.txt&quot;,&quot;w&quot;,stdout);
+	freopen(&quot;D:\\CZHSoftware\\C语言\\Dev编程h\\freopen\\freopenTest1.txt&quot;,&quot;r&quot;,stdin);
+	int a=0,b=0;
+	cout&lt;&lt;&quot;hello world&quot;&lt;&lt;endl;
+	cin&gt;&gt;a&gt;&gt;b;
+	swap(a,b);
+	cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;&quot;,b=&quot;&lt;&lt;b&lt;&lt;endl;
+	cout&lt;&lt;&quot;a+b=&quot;&lt;&lt;a+b&lt;&lt;endl;
+	fclose(stdin);
+	fclose(stdout);
+	return 0;
+} 
 </code></pre>
-<p>显示成</p>
-<p>#include<iostream><br>
-小段代码<br>
-需要引用代码时，如果引用的语句只有一段，不分行，可以用`将语句包起来。</p>
-<p>注：如果你真的要打<code>这个字符的话，可以仿照和*这个字符一样的处理方式，在</code>前加一个反斜杠。</p>
-<p>区块引用<br>
-Markdown 标记区块引用的方法是在行的最前面加 &gt; ，也可以只在整个段落的第一行最前面加上 &gt;，区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可，引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等。</p>
-<p>例如:</p>
-<blockquote>
-<p>Markdown 标记区块引用的方法是在行的最前面加&gt;</p>
-<p>也可以只在整个段落的第一行最前面加上 &gt;</p>
-<blockquote>
-<p>区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可.</p>
-<p><em>我是内部嵌套区块，我可以使用其他 Markdown 语法哦</em></p>
-<h3 id="我是引用区块内使用标题3语法">我是引用区块内使用标题3语法</h3>
-<pre><code class="language-java">     //在引用区块内可以加入代码块
-     import java.net.URL;
-     import java.util.Arrays;
-     import java.util.Date;
-     import java.util.Set;
+<p>freopen(&quot;D:\CZHSoftware\C语言\Dev编程h\freopen\freopenTest1.txt&quot;,&quot;r&quot;,stdin)的作用就是把标准输入流stdin重定向到D:\CZHSoftware\C语言\Dev编程h\freopen\freopenTest1.txt文件中，这样在用scanf或是用cin输入时便不会从标准输入流读取数据,而是从freopenTest1.txt文件中获取输入。只要把输入数据事先粘贴到freopenTest1.txt中即可。</p>
+<p>类似的，freopen(&quot;D:\CZHSoftware\C语言\Dev编程h\freopen\freopenTest.txt&quot;,&quot;w&quot;,stdout)的作用就是把stdout重定向到D:\CZHSoftware\C语言\Dev编程h\freopen\freopenTest.txt文件中，这样输出结果就可以通过打开freopenTest.txt文件查看。</p>
+<p></p>
+<p>上面程序运行意思：</p>
+<p>比如freopenTest1.txt中数据是2 3，</p>
+<p>则freopenTest.txt中写入了</p>
+<p>hello world<br>
+a=3,b=2<br>
+a+b=5</p>
+<p>如题：</p>
+<pre><code class="language-c++">
+/*
+	租用游艇问题
+	DP求解
+	2021年4月24日
+	周六
+	
+*/
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+const int N = 210;  // 题目要求上限n
+
+int r[N][N];  // 出租站i 到出租站j之间的租金 r(i,j)
+
+// 求最少 出租站i 到出租站j之间的租金
+ 
+int getMinRent(int n)
+{
+	int dp[200]; // dp[i] 是从出租站1 到 出租站n的最少租金
+	
+	dp[1] = 0 ; // 初始化  起始位置
+	
+	dp[2] = r[1][2];  // 初始化  1站到2站
+	
+	for( int i = 3; i&lt;=n ;i++)
+	{
+		dp[i] = r[1][i]; // 初始化dp[i] 为第一站到i站的租金
+		
+		for( int j = 2 ; j &lt; i ; j ++)
+		{
+			dp[i] = min( dp[i], dp[j] + r[j][i]);
+			//状态转移方程
+		}
+	}
+	return dp[n];  // 返回 1 到 n 站的最短距离 即所求
+	
+}
+
+
+
+int main()
+{
+	freopen(&quot;D:\\course\\Junior_seconde_term\\algorithm\\class1file\\homework\\0424\\input.txt&quot;,&quot;r&quot;, stdin);
+	freopen(&quot;D:\\course\\Junior_seconde_term\\algorithm\\class1file\\homework\\0424\\output.txt&quot;,&quot;w&quot;, stdout);
+	
+	int n ; 
+	
+	cin &gt;&gt; n;  // n个站
+	
+	for(int i = 1; i &lt; n; i++)
+	{
+		for(int j = i + 1; j &lt;= n; j++)
+		{
+			// scanf(&quot;%d&quot;, &amp; r[i][j]);
+			cin &gt;&gt; r[i][j] ;
+		}
+	}
+	
+	cout &lt;&lt; &quot;The least cost is :&quot; &lt;&lt; getMinRent(n) &lt;&lt; endl;
+	
+	return 0;
+}
+
 </code></pre>
-</blockquote>
-</blockquote>
-<p>显示的效果如下：</p>
-<p>Markdown 标记区块引用的方法是在行的最前面加&gt;</p>
-<p>也可以只在整个段落的第一行最前面加上 &gt;</p>
-<p>区块引用内部可以嵌套，只要根据层次加上不同数量的 &gt;即可.</p>
-<p>我是内部嵌套区块，我可以使用其他 Markdown 语法哦</p>
-<p>我是引用区块内使用标题3语法<br>
-//在引用区块内可以加入代码块<br>
-import java.net.URL;<br>
-import java.util.Arrays;<br>
-import java.util.Date;<br>
-import java.util.Set;<br>
-列表<br>
-Markdown 支持有序列表和无序列表，无序列表使用星号、加号或是减号作为列表标记，有序列表则使用数字接着一个英文句点。两种列表方式格式都是：列表标记+空格+列表项，即列表项目标记通常是放在最左边，也可以缩进最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
-<p>(1)无序列表<br>
-星号、加号或是减号三种列表方式效果等同。</p>
-<p>例如：</p>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue<br>
-它们的显示效果均为：</li>
-</ul>
-<p>Red<br>
-Green<br>
-Blue<br>
-(2)有序列表<br>
-有序列表则使用数字接着一个英文句点。</p>
-<p>例如：</p>
-<ol>
-<li>Red</li>
-<li>Green</li>
-<li>Blue<br>
-显示效果为：</li>
-</ol>
-<p>Red<br>
-Green<br>
-Blue<br>
-链接<br>
-在方块括号后面紧接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
-<p>这是 行内式链接标题 内联方式.</p>
-<p><a href="http://www.luogu.org/">行内式链接标题</a><br>
-图片<br>
-Markdown 使用一种和链接很相似的语法来标记图片</p>
-<p>行内式的图片语法如下：</p>
-<figure data-type="image" tabindex="1"><img src="%E5%9B%BE%E7%89%87%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84" alt="图片下方文字" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="%E5%9B%BE%E7%89%87%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84" alt="图片下方文字" title="可选标题" loading="lazy"></figure>
-<p>详细叙述如下：一个惊叹号!，接着一个方括号，里面放上图片的替代文字（这些文字将在图片加载失败的时候显示），接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 'title' 文字。</p>
-<p>例如：</p>
-<p><img src="https://cdn.class.luogu.com.cn/fe/logo-full.png?27925f707b34b1472e135b1a2dd848e5" alt="logo" loading="lazy"><br>
-将会显示图片：</p>
-<p>logo</p>
-<p>自动链接<br>
-Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用尖括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p>
-<p><a href="https://www.luogu.com.cn/">https://www.luogu.com.cn/</a><br>
-显示效果为：</p>
-<p>https://www.luogu.com.cn/</p>
-<p>分隔线<br>
-可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他内容。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<p>显示的效果如下：</p>
-<p>反斜杠<br>
-Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用<em>标签），你可以在星号的前面加上反斜杠。</p>
-<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号（加上反斜杠后，这些符号都会以原来的方式显示）：</p>
-<p>\   反斜线<br>
-`   反引号</p>
-<ul>
-<li>星号<br>
-_   底线<br>
-{}  花括号<br>
-[]  方括号<br>
-()  括弧</li>
-</ul>
-<h1 id="井字号">井字号</h1>
-<ul>
-<li>加号</li>
-</ul>
-<ul>
-<li>减号<br>
-.   英文句点<br>
-!   惊叹号</li>
-</ul>
+<p></p>
 
             </div>
             
@@ -741,7 +503,7 @@ _   底线<br>
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/" title="Markdown语法">https://Leo-aiolia-bao.github.io/post/markdown-yu-fa/</a>
+      <a href="https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/" title="C/C++重定向">https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -754,15 +516,11 @@ _   底线<br>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">五分钟搭建自己的博客-github+gridea搭建博客和绑定域名</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="五分钟搭建自己的博客-github+gridea搭建博客和绑定域名" href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Hello Gridea" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">Hello Gridea</a>
-        <a class="nav-mobile-next" title="Hello Gridea" href="https://Leo-aiolia-bao.github.io/post/hello-gridea/">下一篇</a>
+        <a class="nav-pc-next" title="排列数字(字典序)" href="https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/">排列数字(字典序)</a>
+        <a class="nav-mobile-next" title="排列数字(字典序)" href="https://Leo-aiolia-bao.github.io/post/pai-lie-shu-zi-zi-dian-xu/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
