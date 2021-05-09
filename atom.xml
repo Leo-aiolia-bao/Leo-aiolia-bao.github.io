@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Leo-aiolia-bao.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-04-24T09:35:12.695Z</updated>
+    <updated>2021-05-09T12:01:30.615Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
     <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
@@ -10,6 +10,33 @@
     <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
     <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
+    <entry>
+        <title type="html"><![CDATA[Java类和对象]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/java-lei-he-dui-xiang/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/java-lei-he-dui-xiang/">
+        </link>
+        <updated>2021-04-24T13:23:58.000Z</updated>
+        <content type="html"><![CDATA[<p>心得：<br>
+子类成员变量与父类变量同名时， 调用的时候是就近原则， 用super()调用父类</p>
+<p>心得：<br>
+1.创建子类的对象时是不是先创建了父类对象啊<br>
+答 ： 不是。只创建了子类对象，，“创键子类的对象的时候，会先调用父类的构造函数！<br>
+只创建子类对象, 子类对象包括两个部分, 自己特有的属性和方法+从父类继承来的属性和方法.<br>
+在创建子类对象时，会把父类里的成员变量和方法也加载进内存（因为要加载进内存，所以要看下这些数据是怎么初始化的，所以调用了父类的构造，仅此而已，并不是去创建了父类对象），然后用this和super这两个引用来区分是父类的还是子类的，但是这个内存区域是子类的内存区域，绝不是父类的 this指向了不仅父类可继承的成员变量和可继承的方法外，它还指向了子类的成员变量和方法 而super仅仅只是指向了子类对象中从父类继承的成员变量和方法</p>
+<p>当父类的I,j 成员变量是 默认类型default时， 友好型的可以被子类继承使用<br>
+当父类的I,j关键字是private时，  子类不可以继承<br>
+出错误的地方是 有关子类 I j 的语句</p>
+<h4 id="结论">结论：</h4>
+<p>当子类的成员变量与父类同名时，若对该成员变量进行操作的方法继承于父类，则改变和获取的是父类的成员变量。<br>
+若对该成员变量进行操作的方法为子类所独有，或override父类，则改变和获取的是子类自己的成员变量。</p>
+<p>当子类拥有与父类同名的成员变量时，父类的成员变量并不会被覆盖，而是与子类的成员变量分别存储在不同的空间，其值仍然可以被改变和访问。</p>
+<p>调用子类son的空构造时，会转到并执行父类的显式声明的空构造， 执行了add(1) ，<br>
+然后转到了 子类重写的add方法， v = 1  i+= v<em>2，  所以i+=2 =  2. 此时，父类中的Base()空构造执行完毕， 接下来执行子类中的 空构造方法， 执行add(2),  v=2 ,  i+= v * 2 也就是i+= 4   = 2 + 4 = 6此时i为6，执行完了子类中的空构造方法。<br>
+此时主函数main()中的方法 bogo( new Son( ) ), 执行到 bogo静态方法中去， 执行b.add(8)<br>
+转到了 Son类中的add方法，执行 i+=8</em>2  = i+=16 = 6 + 16 = 22<br>
+所以打印结果为22</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[C/C++重定向]]></title>
         <id>https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/</id>
@@ -1099,25 +1126,6 @@ for(int j=1;j&lt;=n;j++)
 //这里j从1开始只是为了代码的简洁</p>
 <p>进行n次迭代后最后就可以确定每个点的最短距离<br>
 然后再根据题意输出相应的 要求的最短距离</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[五分钟搭建自己的博客-github+gridea搭建博客和绑定域名]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/wu-fen-zhong-da-jian-zi-ji-de-bo-ke/">
-        </link>
-        <updated>2021-02-04T08:27:00.000Z</updated>
-        <content type="html"><![CDATA[<p>几个教程如下：按部就班操作即可</p>
-<p><a href="https://www.luogu.com.cn/blog/ak-ioi/building-a-blog/">git 及 Gridea 教程</a></p>
-<p><a href="https://gridea.dev/gridea-start/">Gridea官网教程</a></p>
-<p><a href="%5BGridea%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B%5D(https://gridea.dev/gridea-start/)">不错的csdn教程</a></p>
-<p>我踩得坑： <strong>域名</strong>和<strong>仓库</strong>名字 不一致，导致折腾半天找不到自己的博客网站</p>
-<p>如域名：https://getridea.github.io<br>
-仓库：getgridea.github.io</p>
-<p>这样即可 ，<br>
-而下面不可</p>
-<p>如域名：https://getridea.github.io<br>
-仓库：myblog.github.io</p>
 ]]></content>
     </entry>
 </feed>

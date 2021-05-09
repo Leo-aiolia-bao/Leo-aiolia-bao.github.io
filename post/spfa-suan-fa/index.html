@@ -9,7 +9,7 @@
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
 <title>spfa算法 | leo-bao</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1619252045777">
+<link rel="shortcut icon" href="/favicon.ico?v=1620561659107">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -215,7 +215,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">12</span>
+        <span class="site-item-stat-count">13</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -1795,6 +1795,30 @@ int main()
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/java-lei-he-dui-xiang/"" data-c="
+          &lt;p&gt;心得：&lt;br&gt;
+子类成员变量与父类变量同名时， 调用的时候是就近原则， 用super()调用父类&lt;/p&gt;
+&lt;p&gt;心得：&lt;br&gt;
+1.创建子类的对象时是不是先创建了父类对象啊&lt;br&gt;
+答 ： 不是。只创建了子类对象，，“创键子类的对象的时候，会先调用父类的构造函数！&lt;br&gt;
+只创建子类对象, 子类对象包括两个部分, 自己特有的属性和方法+从父类继承来的属性和方法.&lt;br&gt;
+在创建子类对象时，会把父类里的成员变量和方法也加载进内存（因为要加载进内存，所以要看下这些数据是怎么初始化的，所以调用了父类的构造，仅此而已，并不是去创建了父类对象），然后用this和super这两个引用来区分是父类的还是子类的，但是这个内存区域是子类的内存区域，绝不是父类的 this指向了不仅父类可继承的成员变量和可继承的方法外，它还指向了子类的成员变量和方法 而super仅仅只是指向了子类对象中从父类继承的成员变量和方法&lt;/p&gt;
+&lt;p&gt;当父类的I,j 成员变量是 默认类型default时， 友好型的可以被子类继承使用&lt;br&gt;
+当父类的I,j关键字是private时，  子类不可以继承&lt;br&gt;
+出错误的地方是 有关子类 I j 的语句&lt;/p&gt;
+&lt;h4 id=&#34;结论&#34;&gt;结论：&lt;/h4&gt;
+&lt;p&gt;当子类的成员变量与父类同名时，若对该成员变量进行操作的方法继承于父类，则改变和获取的是父类的成员变量。&lt;br&gt;
+若对该成员变量进行操作的方法为子类所独有，或override父类，则改变和获取的是子类自己的成员变量。&lt;/p&gt;
+&lt;p&gt;当子类拥有与父类同名的成员变量时，父类的成员变量并不会被覆盖，而是与子类的成员变量分别存储在不同的空间，其值仍然可以被改变和访问。&lt;/p&gt;
+&lt;p&gt;调用子类son的空构造时，会转到并执行父类的显式声明的空构造， 执行了add(1) ，&lt;br&gt;
+然后转到了 子类重写的add方法， v = 1  i+= v&lt;em&gt;2，  所以i+=2 =  2. 此时，父类中的Base()空构造执行完毕， 接下来执行子类中的 空构造方法， 执行add(2),  v=2 ,  i+= v * 2 也就是i+= 4   = 2 + 4 = 6此时i为6，执行完了子类中的空构造方法。&lt;br&gt;
+此时主函数main()中的方法 bogo( new Son( ) ), 执行到 bogo静态方法中去， 执行b.add(8)&lt;br&gt;
+转到了 Son类中的add方法，执行 i+=8&lt;/em&gt;2  = i+=16 = 6 + 16 = 22&lt;br&gt;
+所以打印结果为22&lt;/p&gt;
+">Java类和对象</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/ccchong-ding-xiang/"" data-c="
