@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Leo-aiolia-bao.github.io</id>
     <title>leo-bao</title>
-    <updated>2021-05-29T13:00:23.686Z</updated>
+    <updated>2021-07-09T03:48:33.299Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Leo-aiolia-bao.github.io"/>
     <link rel="self" href="https://Leo-aiolia-bao.github.io/atom.xml"/>
@@ -10,6 +10,63 @@
     <logo>https://Leo-aiolia-bao.github.io/images/avatar.png</logo>
     <icon>https://Leo-aiolia-bao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, leo-bao</rights>
+    <entry>
+        <title type="html"><![CDATA[OD]]></title>
+        <id>https://Leo-aiolia-bao.github.io/post/od/</id>
+        <link href="https://Leo-aiolia-bao.github.io/post/od/">
+        </link>
+        <updated>2021-07-09T03:43:49.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>## 2021年7月9日
+
+
+</code></pre>
+<h2 id="汇编环境说明">汇编环境说明</h2>
+<ol>
+<li>VC6.0   2. OD 3. 抓包 4. 加解密</li>
+</ol>
+<h2 id="通用寄存器">通用寄存器</h2>
+<p>32位的常用寄存器有8个</p>
+<figure data-type="image" tabindex="1"><img src="https://Leo-aiolia-bao.github.io/post-images/1625802460090.png" alt="" loading="lazy"></figure>
+<pre><code class="language-shell">		FFFF	FF
+32位		16位		8位(2个十六进制位)
+EAX		AX		AL
+ECX		CX		CL
+EDX		DX		DL
+EBX		BX		BL
+ESP		SP		AH
+EBP		BP		CH
+ESI		SI		DH
+EDI		DI		BH
+
+</code></pre>
+<p>L低 8位，  H高8位</p>
+<p>CL  的高八位是 CH</p>
+<figure data-type="image" tabindex="2"><img src="https://Leo-aiolia-bao.github.io/post-images/1625802450905.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>F7 单步执行 setp into</p>
+</blockquote>
+<p><img src="https://Leo-aiolia-bao.github.io/post-images/1625802437096.png" alt="" loading="lazy">!</p>
+<blockquote>
+<p>mov eax,-1  eax 32位 则 EAX寄存器种是32位 8个F</p>
+<p>mov ax, -1  ax 16位 则 EAX如图 4个F</p>
+<p>1位  16进制位 = 4位 二进制位         (F)<sub>16</sub>  = 15  =  (1111)<sub>2</sub></p>
+<p>2位16进制的 = 8位二进制</p>
+<p>3位16进制的 = 12位二进制</p>
+<p>4位16进制的 = 16位二进制</p>
+<p>ax 即 16位 所以只改变了后四位(16位).</p>
+<p>两个字节            一个字节8位</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://Leo-aiolia-bao.github.io/post-images/1625802392918.png" alt="" loading="lazy"></figure>
+<p>al是eax的低八位</p>
+<p>ah是 ax 的高八位</p>
+<figure data-type="image" tabindex="4"><img src="https://Leo-aiolia-bao.github.io/post-images/1625802423569.png" alt="" loading="lazy"></figure>
+<h2 id="内存">内存</h2>
+<p>寄存器很小，所以说 数据放到内存。</p>
+<p>每个应用程序进程都有4GB的内存空间，空头支票。</p>
+<p>程序运行时，才会用到物理内存。</p>
+<p>32位  / 4  = 8位 (16进制位)      8位16进制数</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java类和对象]]></title>
         <id>https://Leo-aiolia-bao.github.io/post/java-lei-he-dui-xiang/</id>
@@ -998,134 +1055,6 @@ int main(){
 6）bellman_ford算法可以存在负权回路，因为它求得的最短路是有限制的，是限制了边数的，这样不会永久的走下去，会得到一个解；<br>
 7)SPFA算法各方面优于该算法，但是在碰到限制了最短路径上边的长度时就只能用bellman_ford了，此时直接把n重循环改成k次循环即可</li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[朴素的Dijkstra算法]]></title>
-        <id>https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/</id>
-        <link href="https://Leo-aiolia-bao.github.io/post/po-su-de-dijkstra-suan-fa/">
-        </link>
-        <updated>2021-02-04T08:43:10.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>日期：2021年2月4日
-时间：16点53分
-😅🏀🏀🕔
-</code></pre>
-<p><strong>题目</strong></p>
-<pre><code class="language-c">给定一个n个点m条边的有向图，图中可能存在重边和自环，所有边权均为正值。
-
-请你求出1号点到n号点的最短距离，如果无法从1号点走到n号点，则输出-1。
-
-输入格式
-第一行包含整数n和m。
-
-接下来m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。
-
-输出格式
-输出一个整数，表示1号点到n号点的最短距离。
-
-如果路径不存在，则输出-1。
-
-数据范围
-1≤n≤500,
-1≤m≤105,
-图中涉及边长均不超过10000。
-
-输入样例：
-3 3
-1 2 2
-2 3 1
-1 3 4
-输出样例：
-3
-
-</code></pre>
-<p><strong>以下为完整代码</strong></p>
-<pre><code class="language-c">#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#include&lt;cstring&gt;
-using namespace std;
-
-const int N=510;
-
-int g[N][N];    //为稠密阵所以用邻接矩阵存储
-int dist[N];    //用于记录每一个点距离第一个点的距离
-bool st[N];     //用于记录该点的最短距离是否已经确定
-
-int n,m;
-
-int Dijkstra()
-{
-    memset(dist, 0x3f,sizeof dist);     //初始化距离  0x3f代表无限大
-
-    dist[1]=0;  //第一个点到自身的距离为0
-
-    for(int i=0;i&lt;n;i++)      //有n个点所以要进行n次 迭代
-    {
-        int t=-1;       //t存储当前访问的点
-
-        for(int j=1;j&lt;=n;j++)   //这里的j代表的是从1号点开始
-            if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j]))     
-                t=j;
-
-        st[t]=true;   
-
-        for(int j=1;j&lt;=n;j++)           //依次更新每个点所到相邻的点路径值
-            dist[j]=min(dist[j],dist[t]+g[t][j]);
-    }
-
-    if(dist[n]==0x3f3f3f3f) return -1;  //如果第n个点路径为无穷大即不存在最低路径
-    return dist[n];
-}
-int main()
-{
-    cin&gt;&gt;n&gt;&gt;m;
-
-    memset(g,0x3f,sizeof g);    //初始化图 因为是求最短路径
-                                //所以每个点初始为无限大
-
-    while(m--)
-    {
-        int x,y,z;
-        cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;
-        g[x][y]=min(g[x][y],z);     //如果发生重边的情况则保留最短的一条边
-    }
-
-    cout&lt;&lt;Dijkstra()&lt;&lt;endl;
-    return 0;
-}
-
-
-</code></pre>
-<p>**思路笔记 **<br>
-有之前宽搜和深搜的基础  就感觉思路特别清晰了</p>
-<p>最近复习了下<code>Dijkstra</code> 发现之前的理解还是有些不太到位<br>
-所以更新了一下 希望能帮助一起学算法的小伙伴理清思路</p>
-<p><code>Dijkstra</code>  的整体思路比较清晰<br>
-即进行<code>n（n为n的个数）</code>次迭代去确定每个点到起点的最小值 最后输出的终点的即为我们要找的最短路的距离</p>
-<p>所以按照这个思路除了存储图外我们还需要存储两个量</p>
-<p><code>dist[n]</code>//用于存储每个点到起点的最短距离<br>
-<code>st[n]</code>  //用于在更新最短距离时 判断当前的点的最短距离是否确定 是否需要更新</p>
-<p>每次迭代的过程中我们都先找到当前未确定的最短距离的点中距离最短的点<br>
-（至于为什么是这样那么这就涉及到<code>Dijkstra算法</code>的具体数学证明了 有兴趣的同学可以百度一下）</p>
-<pre><code class="language-c">int t=-1;       //将t设置为-1 因为Dijkstra算法适用于不存在负权边的图
-for(int j=1;j&lt;=n;j++)
-{
-    if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j])    //该步骤即寻找还未确定最短路的点中路径最短的点
-        t=j;
-}
-</code></pre>
-<p>通过上述操作当前我们的t代表就是剩余未确定最短路的点中 路径最短的点<br>
-而与此同时该点的最短路径也已经确定我们将该点标记</p>
-<p><code>st[t]=true;</code></p>
-<p>然后用这个去更新其余未确定点的最短距离</p>
-<p><code>for(int j=1;j&lt;=n;j++)</code><br>
-<code>dist[j]=min(dist[j],dist[t]+g[t][j]);</code><br>
-//这里可能有同学要问j如果从1开始的话 会不会影响之前已经确定的点的最小距离<br>
-//但其实是不会 因为按照我们的Dijkstra算法的操作顺序 先确定最短距离的点的距离已经比后确定的要小 所以不会影响<br>
-//当然你也可以在循环判断条件里加上<code>if(!st[i])</code><br>
-//这里j从1开始只是为了代码的简洁</p>
-<p>进行n次迭代后最后就可以确定每个点的最短距离<br>
-然后再根据题意输出相应的 要求的最短距离</p>
 ]]></content>
     </entry>
 </feed>

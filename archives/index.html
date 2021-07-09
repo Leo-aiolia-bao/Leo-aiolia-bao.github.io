@@ -9,7 +9,7 @@
 <meta name="description" content="科学派 | Think twice, code once">
 <meta name="theme-color" content="#000">
 <title>leo-bao</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1622293210114">
+<link rel="shortcut icon" href="/favicon.ico?v=1625802494531">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -198,7 +198,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">13</span>
+        <span class="site-item-stat-count">14</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -267,7 +267,7 @@
   <div class="archive-timeline-box">
     <div class="archive-timeline-title">
       
-        <h2 class="language" data-lan="archives" data-count="13">非常好！目前共计13篇日志，继续努力！</h2>
+        <h2 class="language" data-lan="archives" data-count="14">非常好！目前共计14篇日志，继续努力！</h2>
       
     </div>
     
@@ -277,6 +277,19 @@
           <h2 class="tag-year">2021</h2>
         </div>    
         
+      
+      <a href="https://Leo-aiolia-bao.github.io/post/od/">
+        <div class="motion-warpper tag-archive-node">
+          <div class="tag-node">
+            <h1>
+              07-09
+              <small>OD</small>
+            </h1>
+          </div>  
+      </div>
+      </a>
+    
+      
       
       <a href="https://Leo-aiolia-bao.github.io/post/java-lei-he-dui-xiang/">
         <div class="motion-warpper tag-archive-node">
@@ -1233,6 +1246,60 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/od/"" data-c="
+          &lt;pre&gt;&lt;code&gt;## 2021年7月9日
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;汇编环境说明&#34;&gt;汇编环境说明&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;VC6.0   2. OD 3. 抓包 4. 加解密&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;通用寄存器&#34;&gt;通用寄存器&lt;/h2&gt;
+&lt;p&gt;32位的常用寄存器有8个&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1625802460090.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;		FFFF	FF
+32位		16位		8位(2个十六进制位)
+EAX		AX		AL
+ECX		CX		CL
+EDX		DX		DL
+EBX		BX		BL
+ESP		SP		AH
+EBP		BP		CH
+ESI		SI		DH
+EDI		DI		BH
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;L低 8位，  H高8位&lt;/p&gt;
+&lt;p&gt;CL  的高八位是 CH&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;2&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1625802450905.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;F7 单步执行 setp into&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1625802437096.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mov eax,-1  eax 32位 则 EAX寄存器种是32位 8个F&lt;/p&gt;
+&lt;p&gt;mov ax, -1  ax 16位 则 EAX如图 4个F&lt;/p&gt;
+&lt;p&gt;1位  16进制位 = 4位 二进制位         (F)&lt;sub&gt;16&lt;/sub&gt;  = 15  =  (1111)&lt;sub&gt;2&lt;/sub&gt;&lt;/p&gt;
+&lt;p&gt;2位16进制的 = 8位二进制&lt;/p&gt;
+&lt;p&gt;3位16进制的 = 12位二进制&lt;/p&gt;
+&lt;p&gt;4位16进制的 = 16位二进制&lt;/p&gt;
+&lt;p&gt;ax 即 16位 所以只改变了后四位(16位).&lt;/p&gt;
+&lt;p&gt;两个字节            一个字节8位&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;3&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1625802392918.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;al是eax的低八位&lt;/p&gt;
+&lt;p&gt;ah是 ax 的高八位&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;4&#34;&gt;&lt;img src=&#34;https://Leo-aiolia-bao.github.io/post-images/1625802423569.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;内存&#34;&gt;内存&lt;/h2&gt;
+&lt;p&gt;寄存器很小，所以说 数据放到内存。&lt;/p&gt;
+&lt;p&gt;每个应用程序进程都有4GB的内存空间，空头支票。&lt;/p&gt;
+&lt;p&gt;程序运行时，才会用到物理内存。&lt;/p&gt;
+&lt;p&gt;32位  / 4  = 8位 (16进制位)      8位16进制数&lt;/p&gt;
+">OD</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://Leo-aiolia-bao.github.io/post/java-lei-he-dui-xiang/"" data-c="
